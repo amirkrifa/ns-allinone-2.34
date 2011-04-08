@@ -1,0 +1,16 @@
+###############
+# Get Sensitivity
+###############
+
+
+
+rm -f *.txt
+rm -f *.dat
+rm -f ../Sensitivity/Res/*
+
+cat /dev/null > sensitivity.txt
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 20 maintain_stat 0 infinite_ttl 0 drop_policy 5 scheduling_policy 1 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 10.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50  
+
+cp ./* ../Sensitivity/Res/
+rm -f ../Sensitivity/Res/scene_ns

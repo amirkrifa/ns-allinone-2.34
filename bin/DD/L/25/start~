@@ -1,0 +1,71 @@
+# DR
+###############
+#Height Congestion Calculating stat and data size = f(number of sources) for policy 0
+###############
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 10 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 20 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 30 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 50 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 60 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 70 cbr_interval 360 ttl 3600 sim_duration 25400 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 0 sprying_policy 0 buffer_size 20.0 axe_subdivision 50 axe_length 72 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 100.0 time_to_new_stat 3600 stop_uid 59 drop_oldest_bin 50
+
+cat avg_data_size.dat >> ../StatSize/DR/policy0/data.txt
+cat avg_stat_data_size.dat >> ../StatSize/DR/policy0/statData.txt
+
+

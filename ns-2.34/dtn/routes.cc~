@@ -1,0 +1,332 @@
+/*
+Copyright (c) 2005 Henrik Eriksson and Patrik Jnsson.
+All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+*/
+
+/** \file routes.cc  Routes. 
+*/
+
+#include <string.h>
+#include "timers.h"
+#include "routes.h"
+#include "debug.h"
+//#include "timers.h"
+#include "common/node.h"
+#include "common/simulator.h"
+#define debug
+
+
+
+/** Routes constructor.
+ */
+Routes :: Routes(ns_addr_t* here) : list_(NULL), region_(NULL), links_(NULL)
+{
+  here_=here;
+
+}
+
+/** Destroy the route list.
+ */
+Routes :: ~Routes()
+{
+  delete list_;
+}
+
+
+/** Route Constructor*/ 
+Route :: Route (Routes * r,double duration) : next_(NULL), route_(NULL), linfo_(NULL) 
+{
+routes_=r;
+}
+
+
+
+/** Finds next hop.
+ *
+ * \param region   The region for which to find the next hop.
+ 
+ * \param prev     Last node the bundle visited.
+ * \param recvtime The time this bundle was recieved from prev.
+ * \param size     Size of bundle, used to calculate how long the link will be busy.
+ * \param custody  Should nodes accepting custody be preferred.
+ *
+ * \returns LinkInfo for next hop.
+ * \retval NULL if no hop could be found.
+ */
+
+LinkInfo* Routes :: getNextHop(const char* region, const char* admdest, nsaddr_t prev, double recvtime, int size, int custody)
+{
+  LinkInfo* link=NULL;
+  if(list_==NULL) return NULL;
+    char* temp2 = new char[strlen(admdest)];
+    if(!temp2){fprintf(stdout, "Could not allocate memory."); abort();}
+    strcpy(temp2,admdest);
+    strcat(temp2,"\0");
+    Node  * dnode;
+    
+    char temp4[strlen(temp2)];
+    if(strchr(temp2,':'))
+    {
+     int i=0;while(temp2[i]!=':'){temp4[i]=temp2[i];i++;}
+     temp4[i]='\0';
+     dnode = (Node*) TclObject::lookup(temp4);
+    }
+     else  dnode = (Node*) TclObject::lookup(temp2);
+
+    
+    Route * temp=list_;
+    Node  * lnode =(Node*) Node::get_node_by_address(temp->linfo_->node_);
+    delete(temp2);
+    if(! dnode){fprintf(stdout,"Could not lookup node."); return NULL;}
+
+    Route* match  = NULL;
+	
+    while(temp){
+      if(strcmp(dnode->name(),lnode->name())==0)
+	 {
+	   match=temp;
+	   break;
+         }
+      temp=temp->next_;
+      if(temp!=NULL)lnode =(Node*) Node::get_node_by_address(temp->linfo_->node_);
+	
+    }
+
+    if(match==NULL) {fprintf(stdout," we do not found a match \n");return NULL;}
+    link=match->linfo_;
+  return link;
+}
+
+void Routes :: show_route_table(const char * rs)
+{
+Route * temp=list_;
+ int routes_number=0;
+
+fprintf(stdout,"*************************  The Routing Table ******************\n");
+
+while (temp!=NULL)
+{
+if(strcmp(rs,temp->route_)==0)
+{
+fprintf(stdout,"--------> this route is for the region : %s \n",temp->route_);
+fprintf(stdout,"--------> custodian_ : %i \n",temp->custodian_);
+fprintf(stdout,"--------> metric_ : %i \n",temp->metric_);
+fprintf(stdout,"--------> custodian_ : %i \n",temp->custodian_);
+fprintf(stdout,"--------> LinkInfo::mtu_ : %i \n",temp->linfo_->mtu_);
+Node* local=Node::get_node_by_address(temp->linfo_->node_);
+fprintf(stdout,"--------> address of the next hope : node_ : %s \n",local->name());
+routes_number=routes_number+1;
+}
+temp=temp->next_;
+}
+fprintf(stdout,"---------------------------------------------------------------\n");
+fprintf(stdout,"--------> Number of routes =  %i \n",routes_number);
+fprintf(stdout,"***************************************************************\n");
+
+}
+/** Adds a new route.
+ *
+ * \param node       Adress of the hop.
+ * \param route      The region for which the node is a hop to. Use * to add a default route.
+ * \param custodian  1 if the node supports custody, 0 if not.
+ * \param metric     Metric(cost) of this route.
+ * \param mtu        MTU of this route.
+ * \param linkObj    Object name of the link serving this route.
+ *
+ * \returns Status code indicating whether the route was added or not.
+ * \retval 0 on success.
+ * \retval -1 on failure.
+ */
+int Routes :: add(nsaddr_t node, const char* route, int custodian, int metric, int mtu, const char* linkObj)
+{
+
+  if(!route || !linkObj){ DPRINT(DEB_WARN, "Argument route or linkObj is null."); return -1; }
+  if(metric<0) metric = 0;
+  if(strcmp(route,"*")==0){
+    metric=1000;
+    route=NULL;
+  }
+  Route* temp=new Route(this, 10.0);
+  if(! temp) {
+    DPRINT(DEB_ERR, "Could not allocate memory for temp.");
+    abort();
+  }
+
+  if(route) {
+    char* troute = new char[strlen(route)];
+    if(! troute) {
+      DPRINT(DEB_ERR, "Could not allocate memory for troute.");
+      abort();
+    }
+    strcpy(troute,route);
+	temp->route_=troute;
+  } else temp->route_=NULL;
+
+  temp->custodian_=custodian;
+  temp->metric_=metric;
+
+  LinkInfo* cur = links_;
+
+  while(cur && !strcmp(linkObj,cur->linkObj_)) cur=cur->next_;
+  if(! cur)
+{
+    cur=new LinkInfo();
+    if(! cur){ fprintf(stdout, "ER:Could not allocate memory for new LinkInfo"); abort();}
+    strcpy(cur->linkObj_,linkObj);
+    cur->node_ = node;
+    cur->mtu_ = mtu;
+    if(! links_) links_ = cur;
+    else {
+      LinkInfo* tlink = links_;
+      while(tlink->next_) tlink=tlink->next_;
+      tlink->next_=cur;
+    }
+  }
+  temp->linfo_=cur;
+  temp->next_=list_;
+  list_=temp;
+  if(temp->route_)  
+    DPRINT(DEB_INFO,"%2d added route: '%s'\t%d\t%d\t%d\tlink %s",here_->addr_,temp->route_,temp->linfo_->node_,temp->custodian_,temp->metric_,temp->linfo_->linkObj_);
+  else 
+    DPRINT(DEB_INFO,"%2d added route: '*'\t%d\t%d\t%d\tlink %s",here_->addr_,temp->linfo_->node_,temp->custodian_,temp->metric_,temp->linfo_->linkObj_);
+    
+  return 0;
+}
+
+
+
+/** Sets local region.
+ *
+ * \param region  The region to be set as local.
+ *
+ * \note Allocates memory that is pointed to from region_, but frees it if called again.
+ */
+void Routes :: setLocal(const char* region)
+{
+  if(region_){ delete region_; region_ = NULL; }
+  if(! region) return;
+
+  if(! (region_ = new char[strlen(region+1)])){
+    DPRINT(DEB_ERR, "Could not allocate memory for region_.");
+    abort();
+  }
+  strcpy(region_,region);
+}
+
+/** Check if a link for a route is available. 
+ * \param link The link to check for availability.
+ * \retval 0 if not available.
+ * \retval 1 if available.
+ */
+int Routes :: isAvail(LinkInfo* link)
+{
+  if(!link){DPRINT(DEB_WARN,"Argument link is null."); return 0;}
+  Tcl&        tcl    = Tcl::instance();
+  const char* tclres = tcl.result();
+  if(link->busyTo_ >  Scheduler::instance().clock()) return 0;
+  tcl.evalf("%s up?", link->linkObj_);
+  if(strcmp(tclres,"up")) return 0;
+  DPRINT(DEB_DEBUG,"Link %s available.",link->linkObj_);
+  return 1;
+}
+
+/** Indicates that a link will be busy.
+ *
+ * \param size How many bytes that will be sent on the link. Is used to calculate time until the link will be available again.
+ * 
+*/
+
+void LinkInfo :: setBusy(int size)
+{
+  Tcl&        tcl    = Tcl::instance();
+  const char* tclres = tcl.result();
+  int bw = atoi(tclres);
+  if(! bw) bw = 1;
+  busyTo_ = Scheduler::instance().clock() + (double)(size*8)/(double)bw;
+  DPRINT(DEB_DEBUG,"Link %s busy until %f", linkObj_, busyTo_);
+}
+int   Routes::is_there(nsaddr_t node,const char * region,int custodian, int metric, int mtu )
+{
+Route * temp=list_;
+
+while (temp!=NULL)
+{
+if((strcmp(region,temp->route_)==0)&&(node==temp->linfo_->node_))
+		{return 1;
+		}
+	temp=temp->next_;
+}
+return 0;
+}
+
+int Routes::delete_route(char *id)
+{
+fprintf(stdout, "Deleting routes towards : %s\n",id);
+Route *start=list_;
+Route *last;
+while(start!=NULL)
+{ 
+ Node *n= Node::get_node_by_address(start->linfo_->node_);
+ if(start==list_ && strcmp(n->name(),id)==0)
+ { 
+    list_=list_->next_;
+    start->next_=NULL;
+    delete start;
+    start=NULL;
+    return 1;
+ }else  if(start!=list_ && strcmp(n->name(),id)==0  && start->next_==NULL)
+	 { 
+   	   last->next_=NULL;
+   	   delete start;
+   	   start=NULL;
+           last=NULL;
+           return 1;
+ 	 } else if(start!=list_ && strcmp(n->name(),id)==0 && start->next_!=NULL)
+ 			{ 
+  			if(get_number_of_routes()>1)
+			  { 
+   			     last->next_=start->next_;
+   			     start->next_=NULL;
+   			     delete start;
+   			     start=NULL;
+			     last=NULL;
+  			     return 1;
+			  } else if(get_number_of_routes()==1)
+					{last=NULL;
+					 start=NULL;
+					 list_->next_=NULL;
+					 delete list_;
+					 list_=NULL;
+ 					  return 1;
+					} 					
+				  
+					
+ 			}
+
+last=start;
+start=start->next_;
+}
+return -1;
+}

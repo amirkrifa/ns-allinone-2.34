@@ -1,0 +1,134 @@
+/*
+Copyright (c) 2005 Henrik Eriksson and Patrik J�sson.
+All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 1. Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+*/
+
+/** Definitions for bundle management. 
+*/
+
+/** \file bundlemanager.h  Bundle management. 
+*/
+
+#ifndef ns_bundlemanager_h
+#define ns_bundlemanager_h
+
+#include <sys/types.h>
+#include "common/packet.h"
+#include "routes.h"
+#include "headers.h"
+#include "bundle.h"
+#include "registration.h"
+#include "anti_packet.h"
+
+/** Define 64-bit type if not defined. */
+#ifndef u_int64_t
+//typedef unsigned long long u_int64_t;
+#endif
+
+/** The number of different priority queues. */
+#define NUM_QUEUES 8
+
+class BundleManager; 
+class BundleId;
+
+class DTNAgent;
+class QueueTimer;
+class ResendTimer;
+class CollectTimer;
+class EpidemicRouting;
+class DtnNeighborsManager;
+// Manages all bundle related work
+class BundleManager {
+ public:
+  BundleManager(Routes* routes, Registration* reg, DTNAgent* da);
+  ~BundleManager();
+
+  int newBundle(const char* src, 
+		const char* dest, 
+		const char* rpt_to, 
+		const char* cos, 
+		const char* options, 
+		const char* lifespan, 
+		const char* binding, 
+		const char* data, 
+		const char* datasize,
+		int conversation);
+  int newBundle(Packet* pkt);
+  int sendBundle(Bundle* bundle);
+  int sendBundle(Bundle* bundle,LinkInfo* nexthop );
+  int sendHello();
+  int recvHello(Bundle *,char *);
+  char* agentEndpoint();
+  int is_delivered(char *s ,int u_id);
+  int exist_neighbor(char *id);
+
+  Routes* routes_;
+  Bundle * bh_; 
+  int b_id;
+  DTNAgent* da_;
+  DtnNeighborsManager * nm_;
+
+ private:
+  int enqueue(Bundle* bundle);
+  void parseOptions(const char* cos, const char* options, hdr_bdlprim* bdl_prim);
+  char* parseOptions(u_int8_t cos, u_int8_t psec);
+  int localDelivery(Bundle* bundle, int force=0, int local=0);
+  int agentDelivery(Bundle* bundle);
+  bdl_report* parseReport(hdr_bdlpyld* pyldhdr);
+  Bundle* buildReport(Bundle* bundle, int type);
+  int sendReport(Bundle* bundle);
+  int getQueueSize(Bundle* queue);
+  Bundle* queue_[NUM_QUEUES]; // Main queue.  
+  Bundle* sent_;// Sent bundles that still should be kept.    
+  Bundle* local_;             // Bundles queued for local delivery.        
+  Bundle* frags_;             // Fragmented bundles destined locally.    
+  char* agentEndpoint_;       // Address of the agent.   
+  u_int64_t lastTimestamp_;   // Last timestamp used to make sure that all timestamps sent are unique. 
+  Registration* reg_;         // Registration handler.  
+  BundleId* bids_;            // List of delivered bundles. 
+                // DTNAgent for callbacks
+  QueueTimer* qt_;            // QueueTimer
+  ResendTimer* rt_;           // ResendTimer
+  CollectTimer * ht_;           // HelloTimer
+ public: 
+ EpidemicRouting * er_;
+};
+
+/** Bundle identifier tuple.
+ */
+class BundleId {
+ public:
+  BundleId() : source_(NULL), timestamp_(0), exptime_(0),lifespan_(0) {next_=NULL;}   
+// Constructor.          
+  ~BundleId() {delete source_;}                  // Destructor.           
+  char* source_;                                 // Source endpoint id.   
+  double timestamp_;                          // Timestamp.            
+  double  exptime_;
+  double lifespan_;
+  int u_id_;
+  BundleId* next_;
+};
+
+#endif // ns_bundlemanager_h

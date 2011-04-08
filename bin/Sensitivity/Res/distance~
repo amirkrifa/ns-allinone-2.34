@@ -1,0 +1,729 @@
+#!/bin/bash
+
+#calculating the distance between vectors
+
+vector1="./resO/4000.040000.txt"
+vector2="./resO/4000.080000.txt"
+vector3="./resO/4000.120000.txt"
+vector4="./resO/4000.160000.txt"
+vector5="./resO/4000.200000.txt"
+vector6="./resO/4000.240000.txt"
+vector7="./resO/4000.280000.txt"
+vector8="./resO/4000.320000.txt"
+vector9="./resO/4000.360000.txt"
+vector10="./resO/4000.400000.txt"
+vector11="./resO/4000.440000.txt"
+vector12="./resO/4000.480000.txt"
+vector13="./resO/4000.520000.txt"
+vector14="./resO/4000.560000.txt"
+vector15="./resO/4000.600000.txt"
+vector16="./resO/4000.640000.txt"
+vector17="./resO/4000.680000.txt"
+vector18="./resO/4000.720000.txt"
+vector19="./resO/4000.760000.txt"
+vector20="./resO/4000.800000.txt"
+
+4000.040000
+4000.080000
+4000.120000
+4000.160000
+4000.200000
+4000.240000
+4000.280000
+4000.320000
+4000.360000
+4000.400000
+4000.440000
+4000.480000
+4000.520000
+4000.560000
+4000.600000
+4000.640000
+4000.680000
+4000.720000
+4000.760000
+4000.800000
+4000.840000
+4000.880000
+4000.920000
+4000.960000
+4001.000000
+
+first=$vector1
+second=$vector2
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d12 $sum $sum2 nbr $nbrMsg"
+
+first=$vector2
+second=$vector3
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d23 $sum $sum2 nbr $nbrMsg"
+
+first=$vector3
+second=$vector4
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d34 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector4
+second=$vector5
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d45 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector5
+second=$vector6
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d56 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector6
+second=$vector7
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d67 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector7
+second=$vector8
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d78 $sum $sum2 nbr $nbrMsg"
+
+first=$vector8
+second=$vector9
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d89 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector9
+second=$vector10
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d910 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector10
+second=$vector11
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1011 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector11
+second=$vector12
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1112 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector12
+second=$vector13
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1213 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector13
+second=$vector14
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1314 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector14
+second=$vector15
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1415 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector15
+second=$vector16
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1516 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector16
+second=$vector17
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1617 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector17
+second=$vector18
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1718 $sum $sum2 nbr $nbrMsg"
+
+
+first=$vector18
+second=$vector19
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1819 $sum $sum2 nbr $nbrMsg"
+
+first=$vector19
+second=$vector20
+
+sum=0
+sum2=0
+nbrMsg=0
+for message1 in `cat $first`
+do
+  id1=`echo $message1|cut -d"-" -f1`
+  val1=`echo $message1|cut -d"-" -f4`
+  tmp1=`cat $second| grep "^$id1-"| head -1`
+  if [ $tmp1 != "" ]
+  then
+   nbrMsg=`expr $nbrMsg + 1`
+   id2=`echo $tmp1|head -1|cut -d"-" -f1`
+   val2=`echo $tmp1|head -1|cut -d"-" -f4`
+   if [ "$val1" -lt 70 ]
+   then
+   if [ "$val2" -lt 70 ]
+   then
+    diff1=$((($val1 - $val2)*($val1 - $val2)))
+    diff2=$(($val1 - $val2))
+    if [ "$diff2" -lt 0 ]
+    then
+      diff2=`expr 0 - $diff2`
+    fi
+    sum=`expr $sum + $diff1`
+    sum2=`expr $sum2 + $diff2`
+    fi
+  fi
+ fi
+done
+
+echo -e "d1920 $sum $sum2 nbr $nbrMsg"

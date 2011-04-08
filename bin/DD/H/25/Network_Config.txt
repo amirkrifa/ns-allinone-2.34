@@ -1,0 +1,1120 @@
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216
+ Buffer capacity 15
+ Max Neighbors 1000
+ Max uid length 100
+ Hello Interval 30.000000
+ Delivered bundles cleaning interval 6000
+ Block Resend Interval 3
+ Neighbors check interval 31.000000
+ Routing 1
+ Max Spray time  50
+ Infinite TTL 0
+ Ack Mechanism  0
+ Anti Packet Mechanism  0
+ Maintain stat 1
+ Reference 0
+ Axe subdivision = 25
+ Axe length = 216

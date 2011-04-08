@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#updating time stamps
+cut -d" " -f1 sensitivity.txt | awk '!x[$0]++' > timeStamps
+
+for timestamp in `cat timeStamps`
+do
+  cat sensitivity.txt | grep "^$timestamp " > tmp11
+  for node in `cat listNodes`
+  do
+    for message in `cat messagesUids`
+    do
+      cat tmp11|grep "$node$message " > tmp22
+      echo -e "$timestamp $node$message\n"
+      nbrLignes=`wc -l tmp22|cut -d" " -f1`
+      if [ -s tmp22 ]
+      then
+	# the message differente optimal number of copies
+	sum=0
+	for nbr in `cat tmp22|cut -d" " -f5`
+	do
+	  nbr2=`echo $nbr | cut -d"." -f1`
+	  sum=`expr $sum + $nbr2`
+	
+	done
+	# calcultae the avg optimal number of copies per message
+	avg=`expr $sum / $nbrLignes`
+	echo "$avg">> ./res1/$timestamp.txt
+      fi
+    done
+  done
+done

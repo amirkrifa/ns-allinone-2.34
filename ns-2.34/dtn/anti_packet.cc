@@ -1,0 +1,242 @@
+/*
+ * Copyright (c) 2007,2008 INRIA
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as 
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * In addition, as a special exception, the copyright holders of
+ * this module give you permission to combine (via static or
+ * dynamic linking) this module with free software programs or
+ * libraries that are released under the GNU LGPL and with code
+ * included in the standard release of ns-2 under the Apache 2.0
+ * license or under otherwise-compatible licenses with advertising
+ * requirements (or modified versions of such code, with unchanged
+ * license).  You may copy and distribute such a system following the
+ * terms of the GNU GPL for this module and the licenses of the
+ * other code concerned, provided that you include the source code of
+ * that other code when and as the GNU GPL requires distribution of
+ * source code.
+ *
+ * Note that people who make modified versions of this module
+ * are not obligated to grant this special exception for their
+ * modified versions; it is their choice whether to do so.  The GNU
+ * General Public License gives permission to release a modified
+ * version without this exception; this exception also makes it
+ * possible to release a modified version which carries forward this
+ * exception.
+ *
+ * Author: Amir Krifa <amir.krifa@sophia.inria.fr>
+ */
+
+#include <anti_packet.h>
+#include <list>
+/**Constructor  
+ *\param b : A pointer to the delivred Bundle id 
+ */
+Delivred_Bundle::Delivred_Bundle(char *id)
+{
+	delivred_bundle_id.assign(id);
+}
+
+/** Delivred Bundles List Constructor 
+ */
+Delivred_Bundles_List::Delivred_Bundles_List()
+{
+	number_of_delivred_bundles=0;
+	updated=0;
+	update_time=0;
+}
+
+/** Delivred Bundles List Destructor
+ */
+Delivred_Bundles_List::~Delivred_Bundles_List()
+{
+	
+	while(!dbMap.empty())
+	{
+		map<string, Delivred_Bundle *>::iterator iter = dbMap.begin();
+		delete iter->second;
+		dbMap.erase(iter);
+	}
+}
+
+/** Add a new delivred Bundle
+ * \param bid : the delivred Bundle id
+ */
+void Delivred_Bundles_List::add_delivred_bundle(string bid)
+{
+	if(is_bundle_delivred(bid)== 0)
+	{
+		// Adding the Bundle
+		dbMap[string(bid)] = new Delivred_Bundle((char*)bid.c_str());
+		number_of_delivred_bundles++;
+	}
+}
+
+/** Verify if a Bundle is already delivred or not 
+ * \param bid : The bundle id
+ * 
+ */
+int Delivred_Bundles_List::is_bundle_delivred(string bid)
+{
+	if(dbMap.find(bid) == dbMap.end())
+		return 0;
+	else return 1;
+}
+
+/** Return the number of delivred Bundles 
+ * 
+ */
+int Delivred_Bundles_List::get_number_of_delivred_bundles()
+{
+	return number_of_delivred_bundles;
+}
+
+/**Return the list of Delivred Bundles
+ * 
+ */
+void Delivred_Bundles_List::get_delivred_bundles_list(string & list)
+{
+	if(get_number_of_delivred_bundles() > 0)
+	{
+		for(map<string, Delivred_Bundle *>::iterator iter = dbMap.begin(); iter != dbMap.end(); iter++)
+		{
+			list.append(iter->first);
+			list.append("-");
+		}
+	}
+}
+
+/** 
+	Return the number of recived bundles on the list
+ */
+
+int Delivred_Bundles_List::number_of_recived_bundles(char *l, int len)
+{
+	if(strlen(l)>strlen("REGION1,_o21"))
+	{
+		int n=0;
+		char recv_list_[len];
+		strcpy(recv_list_,"");
+		strcat(recv_list_, l);
+		recv_list_[len]='\0';
+		int i=0;
+		while(recv_list_[i]!='\0')
+		{
+			if(recv_list_[i]=='-' && recv_list_[i+1]=='R'&& (strlen(strchr(l,'R'))>strlen("REGION1:_o32:1r1"))) n++;
+			i++;
+		}
+		return n+1;
+	}
+	else return 0;
+}
+
+
+/** Return the legth of a Bundle id
+ * 
+ */
+int Delivred_Bundles_List::id_length(char * list, int id)
+{
+	if(id<= number_of_recived_bundles(list, strlen(list)))
+	{
+		if(id ==1) 
+			return strlen(list)-strlen(strchr(list,'-'));
+		else 
+		{
+ 			char *test=list;
+ 			int i=1;
+ 			while(i<id) {test=strchr(test,'-');i++;}
+ 			int j=1;
+ 			int l=0;
+ 			while(test[j]!='-'){l++;j++;}
+ 			return l;
+		}
+
+		return -1;
+	}
+
+	return -1;
+}
+
+/**Update the List of delivred Bundles
+ * \param recv : A pointer to the recived list
+ * \param len  : The length of recv
+ */
+
+void Delivred_Bundles_List::update_delivred_bundles_list(char * recv,int len)
+{
+	list<string> recv_bundles_ids_;
+	updated = 0;
+
+	string current_id;
+	int nr = number_of_recived_bundles(recv,len);	
+	int deleted = 1;
+	int i=0, deb=0, dn=0, j=0;
+	if(nr > 0)
+	{      
+		while( recv[i] != '\0')
+		{ 
+			if( deb == 0) 
+			{ 
+					current_id.resize(id_length(recv, dn+1));
+					current_id.clear();
+					deb=1;
+					deleted=0;
+			}
+	
+	        if(recv[i]!='-')
+	 		{
+				current_id.append(sizeof(char), recv[i]);
+	  			j++;
+	 		}
+	       	else 
+	       	{ 
+				if(current_id.length() > strlen("REGION1:_o32:1"))
+	       		{ 
+	       			  recv_bundles_ids_.push_back(current_id);
+	       			  deleted = 1;
+	       			  dn++;
+	       			  if(dn < nr)
+					  {
+							deleted=0;
+	       					current_id.resize(id_length(recv,dn+1));
+	       			  		current_id.clear();
+	       			  }	
+	       			  j=0;
+				}
+	       		
+				j=0;
+			}
+	 i++;
+	}
+	}
+
+if(deleted==0) current_id.clear();
+
+if(dn>0)
+{
+	for(list<string>::iterator iter = recv_bundles_ids_.begin(); iter != recv_bundles_ids_.end(); iter++)
+	{
+		if(is_bundle_delivred((*iter)) == 0 )
+		{
+			add_delivred_bundle(*iter);
+		}
+	}
+
+	updated = 1;
+	update_time = TIME_IS;
+}
+
+recv_bundles_ids_.clear();
+}

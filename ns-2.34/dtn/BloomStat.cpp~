@@ -1,0 +1,1183 @@
+/*
+ * Copyright (c) 2007,2008 INRIA
+ * All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as 
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * In addition, as a special exception, the copyright holders of
+ * this module give you permission to combine (via static or
+ * dynamic linking) this module with free software programs or
+ * libraries that are released under the GNU LGPL and with code
+ * included in the standard release of ns-2 under the Apache 2.0
+ * license or under otherwise-compatible licenses with advertising
+ * requirements (or modified versions of such code, with unchanged
+ * license).  You may copy and distribute such a system following the
+ * terms of the GNU GPL for this module and the licenses of the
+ * other code concerned, provided that you include the source code of
+ * that other code when and as the GNU GPL requires distribution of
+ * source code.
+ *
+ * Note that people who make modified versions of this module
+ * are not obligated to grant this special exception for their
+ * modified versions; it is their choice whether to do so.  The GNU
+ * General Public License gives permission to release a modified
+ * version without this exception; this exception also makes it
+ * possible to release a modified version which carries forward this
+ * exception.
+ *
+ * Author: Amir Krifa <amir.krifa@sophia.inria.fr>
+ */
+
+
+#include "BloomStat.h"
+#include <fcntl.h>
+#include <unistd.h>
+#include "bmflags.h"
+
+#include "bundlemanager.h"
+#include "dtn.h"
+#include <stdlib.h>
+
+/** DTN Node Entry constructor 
+*/
+
+Dtn_Node::Dtn_Node(char * id, double lv)
+{
+	node_id.assign(id);
+	last_meeting_time = lv;
+	last_conv = 0;
+	seen = 0;
+	updated = 1;
+}
+
+/** Return the node ID
+ * 
+*/
+
+char * Dtn_Node::get_node_id()
+{
+	return (char *)node_id.c_str();
+}
+
+/** Dtn_Message Constructor
+*/
+
+Dtn_Message::Dtn_Message(char * bid, int del,double lt,double ttl)
+{
+	bundle_id.assign(bid);
+	deleted = del;
+	life_time = lt;
+	this->ttl = ttl;
+	updated = 1;
+}
+
+/**Return A Dtn_Message ID
+ * 
+ */
+
+char * Dtn_Message::get_bstat_id(){
+
+	return (char *)bundle_id.c_str();
+}
+
+
+
+/** Return if a node exist in the stat matrix
+ * 
+ */
+Dtn_Node * Network_Stat::is_node_here(char *node_id)
+{
+	if(nodesMatrix.empty())
+		return NULL;
+	else
+	{
+		map<string, Dtn_Node *>::iterator iter = Nodesmatrix.find(string(node_id));
+		if(iter ==matrix.end())
+			return NULL;
+		else
+		{
+			return iter->second;
+		}
+	}
+}
+
+Dtn_Message * Network_Stat::is_bundle_here(char *bundle_id)
+{
+	dn->updated = 1;
+	map<string, Dtn_Message *>::iterator iter = messagesMatrix.find(bundle_id);
+	if(iter !=  messagesMatrix.end())
+	{
+		return iter->second;
+	}else
+	{
+		return NULL;
+	}
+
+}
+
+/** Add A node to the stat matrix
+ * 
+ */
+
+void Network_Stat::add_node(char * node_id, double t_view)
+{
+
+	Dtn_Node * dn =NULL;
+	if((dn = is_node_here(node_id)) == NULL)
+	{
+		nodesMatrix[string(node_id)] = new Dtn_Node(node_id, t_view);
+		nodesMatrix[string(node_id)]->updated = 1;
+		number_of_nodes++;
+	}else
+	{
+		// Updating the Last Meeting time
+		dn->update_meeting_time(t_view);
+		dn = NULL;
+	}
+
+}
+
+/** Network Stat constructor
+ * 
+ */
+
+Network_Stat::Network_Stat(Delivred_Bundles_List *dbl, BundleManager *b)
+{
+	
+	bm_=b;
+	dbl_=dbl;
+	number_of_nodes = 0;
+	this->local_stat = 0;
+	stat_last_update = TIME_IS;
+	last_axe_update = 0;
+	number_of_meeting = 0;
+	total_meeting_samples = 0;
+	this->convergence_state = 0;
+	stat_axe = new Axe[bm_->da_->axe_length];
+	axe_length = bm_->da_->axe_length;
+	axe_subdivision = bm_->da_->axe_subdivision;
+	for(int i = 0; i < axe_length; i++)
+	{
+		stat_axe[i].initiate_intervall(axe_subdivision*i, axe_subdivision*(i+1),this);
+	}
+	
+	
+	
+}
+
+void Network_Stat::InitLogFiles()
+{
+	string fileMi;
+	fileMi.append("mi-");
+	fileMi.append(bm_->agentEndpoint());
+	fileMi.append(".txt");
+	mi_log = fopen(fileMi.c_str(),"w");
+
+	string fileNi;
+	fileNi.append("ni-");
+	fileNi.append(bm_->agentEndpoint());
+	fileNi.append(".txt");
+	ni_log = fopen(fileNi.c_str(),"w");
+	
+	string fileSA;
+	fileSA.append("SA-");
+	fileSA.append(bm_->agentEndpoint());
+	fileSA.append(".txt");
+	stat_axe_log = fopen(fileSA.c_str(), "w");
+	
+	string fileA;
+	fileA.append("Axe-");
+	fileA.append(bm_->agentEndpoint());
+	fileA.append(".txt");
+	axe_log = fopen(fileA.c_str(), "w");
+}
+
+
+Network_Stat::~Network_Stat()
+{
+	
+	fclose(axe_log);
+	fclose(stat_axe_log);
+	fclose(ni_log);
+	fclose(mi_log);
+	delete [] stat_axe;
+}
+
+/**Add a bundle to a specific node in the stat matrix
+ * 
+ */
+int Network_Stat::add_bundle(char * bundle_id, double lt,double ttl){
+	
+	if(strlen(bundle_id) == 0)
+		{fprintf(stderr, "Invalid Bundle Id\n");exit(-1);}
+	Dtn_Message *bs = this->is_bundle_here(bundle_id);
+	if(bs != NULL)
+	{	
+		bs->life_time = lt;
+		bs->ttl = ttl;
+		bs->updated = 1;
+		last_axe_update = 1;
+		stat_last_update = TIME_IS;
+		return 1;
+	}
+	else
+	{	
+		Dtn_Node * dn = is_node_here(node_id);
+		if(dn == NULL)
+		{
+			// We add the node before then we add the bundle
+			add_node(node_id, TIME_IS);
+			messagesMatrix[string(bundle_id)] = new Dtn_Message(bundle_id,bundle_deleted,lt,ttl);
+			messagesMatrix[string(bundle_id)]->updated = 1;
+			last_axe_update = 1;
+			stat_last_update = TIME_IS;
+			dn->updated = 1;
+			dn->add_bundle();
+			return 1;
+		}
+		else
+		{
+			// we add the bundle to the existing node 
+			last_axe_update=1;
+			stat_last_update = TIME_IS;
+			dn->updated=1;
+			messagesMatrix[string(bundle_id)] = new BStat(bundle_id,bundle_deleted,lt,ttl);
+			messagesMatrix[string(bundle_id)]->updated = 1;
+			dn->add_bundle();
+			return 1;
+		}
+	}
+}
+
+/** Get the estimated number of copies for a specific bundle from the stat matrix
+ * 
+ */
+
+int  Network_Stat::get_number_of_copies(char * bundle_id)
+{
+	
+	int nc=0;
+	map<string, Dtn_Message* > iter =  messagesMatrix.find(string(bundle_id));
+	Dtn_Message * dm = NULL; 
+	if(iter != messagesMatrix.end())
+	{
+		dm = iter->second;
+		nc = dm->getNumberOfCopies();
+	}
+	else
+	{
+		nc = 1;
+	}
+
+	return nc;
+
+}
+
+/** Get the number of nodes that have seen a specific Bundle from the stat matrix
+ * 
+ */
+int  Network_Stat::get_number_of_nodes_that_have_seen_it(char * bundle_id)
+{
+
+	int ns = 0;
+	map<string, Dtn_Message* > iter =  messagesMatrix.find(string(bundle_id));
+	Dtn_Message * dm = NULL; 
+	if(iter != messagesMatrix.end())
+	{
+		dm = iter->second;
+		ns = dm->getNumberOfNodes();
+	}
+	else
+	{
+		ns = 1;
+	}
+
+	return ns;
+}
+
+/** Return A Node Infos from A stat
+ */
+
+void Network_Stat::get_message_i_from_stat(char *recived_stat, int p, string &id)
+{	
+	if(recived_stat != NULL)
+	{
+		string rs(recived_stat);
+		if(p==1)
+		{	
+			size_t pos;
+			if(this->get_number_of_messages_from_stat(recived_stat) == 1)
+				pos = rs.find("#");
+			else pos=rs.find("\\");
+			if(pos!=std::string::npos)
+			{
+				string r = rs.substr(0,pos);
+				char rr[r.size()+1];
+				strcpy(rr,(char*)r.c_str());
+				id.assign(rr);
+			}
+											
+		}
+		else 
+		{
+			string rs(recived_stat);
+		  	int j=1;
+		  	ssize_t pos;
+		  	pos=rs.find("\\");
+		  	while(j<p)
+		  	{
+				rs.assign(rs.substr(pos+1));
+		  	  	pos=rs.find("\\");
+			  	j++;
+		  	}
+		  	size_t pos2=rs.find("R");
+		  	size_t pos3=rs.find("\\");
+		  	string r_s;
+		  		  
+		  	if(pos3!=std::string::npos)
+				  r_s=rs.substr(pos2,pos3);
+		 	else	r_s=rs.substr(pos2);
+		  	char r[r_s.size()+1];
+		  	strcpy(r,(char*)r_s.c_str());
+		  	id.assign(r);
+		}
+	}
+}
+
+/** Return A Node Id from Stat
+ */
+
+void Network_Stat::get_node_id_from_stat(char *node, string &id)
+{	
+	if(node!=NULL)
+	{
+		char *n = strchr(node,'=');
+		int nod_l = strlen(node);
+		int n_l = strlen(n);
+		if(n != NULL)
+		{
+			char n_id[nod_l-n_l];
+			strcpy(n_id,"");
+			strncat(n_id,node,nod_l-n_l);
+			strcat(n_id,"\0");
+			n=NULL;
+			id.assign(n_id);
+		}
+	}
+}
+
+/** Return A node last meeting time from a stat
+ * 
+ */
+
+double Network_Stat::get_node_lm(char *node)
+{
+	string nod(node);
+	size_t pos1=nod.find("=");
+	size_t pos2=nod.find("@");
+	string lm=nod.substr(pos1+1,pos2-1);
+	return atof(lm.c_str());
+}
+
+/** Return a bundle Id from a stat
+ * 
+ */
+void Network_Stat::get_bundle_id(char * bundle, string &id)
+{
+	
+	string bun(bundle);
+	size_t pos2=bun.find("-");
+	string r=bun.substr(0,pos2);
+	char rr[r.size()+1];
+	strcpy(rr,r.c_str());
+	id.assign(rr);
+}
+
+void Network_Stat::get_node_from_stat(char * bund,int p, string & node)
+{	
+	if(get_number_of_nodes_for_a_bundle(bundle) >= p)
+ 	{	string bunlde(bund);
+ 		if(p==1)
+ 		{
+ 			size_t pos_e = bunlde.find("*");
+ 			size_t pos_d_1 = bunlde.find("$");
+ 			string br = bunlde.substr(pos_e+1,pos_d_1-1);
+ 			char brr[br.size()+1];
+ 			strcpy(brr, br.c_str());
+ 			node.assign(brr);
+ 		}else
+		{
+ 			int j=1;
+ 			ssize_t pos;
+ 			pos=bundle.find("$");
+ 			while(pos!=std::string::npos && j<p)
+ 			{
+ 				bundle.assign(bundle.substr(pos));
+ 				pos=bundle.find("$");
+ 				j++;
+ 			}
+			// TODO: Verify
+ 			size_t pos2 = bundle.find("R");
+ 			size_t pos3 = bundle.find("\\");
+ 			string r_s;
+
+ 			if(pos3==std::string::npos)
+ 			{
+ 				r_s=nod.substr(pos2);
+ 			}else 
+			{
+ 				r_s=nod.substr(pos2,pos3-1);
+ 			}
+
+ 			char br[r_s.size()+1];
+ 			strcpy(br, r_s.c_str());
+ 			node.assign(br);
+ 		}
+ 	}
+}
+
+/** Return if the bundle was deleted or Not From A stat
+ * 
+ */
+
+int Network_Stat::get_bundle_del(char * bundle, char * node)
+{
+	// TODO: Verify
+	string bun(node);
+	size_t pos1 = bun.find("@");
+	string r = bun.substr(pos1+1);
+	int i = atoi(r.c_str());
+	return i;
+	
+}
+
+/** Return the bundle life time From from the stat
+ * 
+ */
+
+double Network_Stat::get_bundle_life_time(char * bundle)
+{
+	string bun(bundle);
+	size_t pos1=bun.find("-");
+	size_t pos2=bun.find("+");
+	string r=bun.substr(pos1+1,pos2-1);
+	double lt=atof(r.c_str());
+	return lt;
+	
+}
+
+/** Return the bundle TTL From from the stat
+ * 
+ */
+
+double Network_Stat::get_bundle_ttl(char * bundle)
+{
+	string bun(bundle);
+	size_t pos1=bun.find("+");
+	size_t pos2=bun.find("*");
+	string r=bun.substr(pos1+1,pos2-1);
+	double lt=atof(r.c_str());
+	return lt;
+	
+}
+
+/** Return the number of bundles of a Node from Stat
+ * 
+ */
+
+int Network_Stat::get_number_of_nodes_for_a_bundle(char *bundle)
+{	if(node==NULL)
+		return 0;
+	else
+	{
+		int i=0;
+		int j=0;
+		int e=0;
+		while(node[i]!='\0')
+		{
+			if(node[i]=='*')
+				e++;
+			if(node[i]=='$')
+				j++;
+			i++;
+		}
+		if(e==1 && j==0)
+			return 1;
+		if(e==0)
+			return 0;
+		return j+1;
+	}
+}
+
+/** Update the stat matrix using data from the recived matrix resume 
+ * 
+ */
+
+void Network_Stat::update_network_stat(char * recv)
+{
+
+	if(recv != NULL)
+	{
+		int nm = get_number_of_messages_from_stat(recv);
+		int i = 1;
+		
+		// Extracting messages IDS
+		while(i <= nm)
+		{	
+			
+			string recived_message;
+			this->get_message_i_from_stat(recv,i, recived_message);
+
+			string id;
+			this->get_bundle_id((char *)recived_message.c_str(), id);
+			//	fprintf(stdout, "	message : %s message id: %s\n",recived_message.c_str(), id.c_str()); 
+			if(id.length())
+			{
+				// view if the node already exist 
+				Dtn_Message * dn;
+				if((dn = this->is_message_here((char*)id.c_str()))==NULL)
+				{	
+					this->add_message((char*)recived_message.c_str(), (char*)id.c_str());
+				}
+				else 
+				{
+					this->update_message(recived_message, id, dn);
+		 		}
+			}
+			i++;	
+		}
+	}
+}
+/** Return the number of nodes recived from Stat
+ * 
+ */
+int Network_Stat::get_number_of_messages_from_stat(char * recived_stat)
+{
+	if(recived_stat == NULL)
+		return 0;
+	else
+	{
+	    	int nn = 0;
+		int i = 0;
+		while(recived_stat[i]!='#')
+		{
+			if(recived_stat[i] == '\\')
+				nn++;
+			i++;
+		}
+		return nn+1;
+	}
+}
+
+/** Get a resume of the current stat matrix
+ * 
+ */
+
+void Network_Stat::get_stat_to_send(string &stat)
+{
+	if(!messagesMatrix.empty())
+	{
+		string r;
+		int i = 0;
+		for(map<string, Dtn_Message *>::iterator iter = messagesMatrix.begin(); iter != messagesMatrix.end(); iter++)
+		{
+			// New Message
+			if(i > 0)
+				r.append(sizeof(char),'\\');
+			
+			// Message Id
+			r.append(iter->first);
+
+			// Life Time
+			r.append(sizeof(char),'-');
+			char length2[50];
+			sprintf(length2,"%f", (iter->second)->life_time);
+			length2[strlen(length2)+1]='\0';
+			r.append(length2);
+			
+			// appending the bundle ttl
+			r.append(sizeof(char),'+');
+			char length3[50];
+			sprintf(length3,"%f", (iter->second)->ttl);
+			length3[strlen(length3)+1]='\0';
+			r.append(length3);
+
+			
+			if(!(iter->second)->nodesMap.empty())
+			{
+				r.append(sizeof(char),'*');
+				
+				for(map<string, Dtn_Node*>::iterator iterB = (iter->second)->nodesMap.begin(); iterB != (iter->second)->nodesMap.end(); iterB++)
+				{
+					// Appending the bundles separator
+					if(iterB != (iter->second)->nodesMap.begin())
+						r.append(sizeof(char),'$');
+
+					// Appending the node id	
+					r.append(iterB->first);
+
+					// Appending the node meeting time
+					char length[50];
+					sprintf(length,"%f",getNodeMeetingTime(iterB->first));
+					r.append(sizeof(char),'=');
+					r.append(length);
+						
+					// Appending the deleted status
+					r.append(sizeof(char),'@');
+					switch(iterB->second)
+					{
+						case 0: r.append(sizeof(char),'0');break;
+						case 1 :r.append(sizeof(char),'1');break;
+						case 2 :r.append(sizeof(char),'2');break;
+						default: fprintf(stdout, "Eroor\n",0);
+					}
+				}
+			}
+			i++;
+		}
+		r.append(sizeof(char),'#');
+		stat.assign(r);
+	}
+}	
+
+
+void Network_Stat::view_stat_table()
+{
+	for(map<string, Dtn_Message*>::iterator iter = messagesMatrix.begin(); iter != messagesMatrix.end(); iter++)
+	{   
+		fprintf(stdout," *******************************************************\n");
+		fprintf(stdout," -------------------->  Bundle ID %s Life Time %f Exp Time %f\n",(iter->first).c_str(), (iter->second)->life_time, (iter->second)->ttl);
+		for(map<string, int >::iterator iterB = (iter->second)->nodesMap.begin();iterB != (iter->second)->nodesMap.end();iterB++)
+		{
+			fprintf(stdout," -------------------->  Node ID %s Del %i \n",(iterB->first).c_str(), iterB->second);
+		}
+	}
+}
+
+
+/** Update the bundle statu
+ */
+void Network_Stat::update_bundle_status(char * node_id, char * bundle_id, int del,double lt,double ttl)
+{
+
+	Dtn_Message *dm;
+
+	string bid;
+	bid.assign(bundle_id);
+
+	if((dm = is_message_here(bid)) != NULL)
+	{	
+		dm->updated = 1;
+		dm->addNode(string(node_id), del);
+	
+		dm->was_deleted(del);
+		dm->life_time=lt;
+		dm->ttl=ttl;
+		last_axe_update=1;
+		stat_last_update = TIME_IS;
+
+	}
+}
+
+/** Add a node to the stat matrix
+ */
+ 
+void Network_Stat::add_message(char * message,char * messageId)
+{
+	string message_id(message);
+
+	// first adding the message
+	string bundleId;
+	double bundleLifeTime = get_bundle_life_time(message);
+	double bundleTTL = get_bundle_ttl(message);
+	add_bundle((char*)messageId.c_str(), bundleLifeTime, bundleTTL);
+	Dtn_Message * dm = is_bundle_here((char*)messageId.c_str());
+		
+	int nn = this->get_number_of_nodes_for_a_bundle(message);
+	//fprintf(stdout, "Number of nodes: %i Message id %s\n", nn, messageId);
+	for(int i=0; i < nn ;i++)
+	{
+		string tbid;
+		this->get_node_from_stat(message,i+1, tbid);
+		string bId;
+		this->get_node_id((char*)tbid.c_str(), bId);
+		//	fprintf(stdout, "	NodeId: %s\n", tbid.c_str());
+		this->add_node((char*)tbid.c_str(), this->get_node_lm(tbid));
+		dm->addNode(tbid, this->get_node_lm(tbid));
+	}
+}
+
+
+void Network_Stat::update_message(string& message,string& message_id, Dtn_Message* dm)
+{
+	int nn = this->get_number_of_nodes_for_a_bundle((char*)node.c_str());
+	//	fprintf(stdout, "Updating message: %s\n Number of Bundles %i\n",message.c_str(), nn); 
+
+	// Bundle Life Time 
+	double tlt = this->get_bundle_life_time((char*)message.c_str());
+	dm->life_time = tlt;	
+
+	//Bunlde TTL
+	double ttl=this->get_bundle_ttl((char*)message.c_str());
+	dm->ttl = ttl;	
+
+	for(int i = 0; i < nn; i++)
+	{
+		string node, nodeId;
+
+		//All the Bundle
+		this->get_node_from_stat((char*)message.c_str(), i+1, node);
+
+		// His ID
+		this->get_node_id((char *)node.c_str(), nodeId);
+
+		// Bundle vs node Status
+		int del = this->get_bundle_del((char*)node.c_str());		
+
+		dm->addNode(node_id, del);
+	}
+}
+
+
+/** Update the Node last meeting time 
+ */
+void Network_Stat::update_node_last_meeting_time(char * node_id)
+{
+	Dtn_Node *dn=this->is_node_here(node_id);
+	if(dn!=NULL)
+	{
+		dn->last_conv = TIME_IS;
+		dn->seen = 1;
+	}
+}
+
+/** Return the last meeting time with a Node 
+ */
+
+double Network_Stat::get_last_meeting_time(char *node_id)
+{
+	Dtn_Node *dn=this->is_node_here(node_id);
+	if(dn!=NULL)
+	{	
+		if(dn->seen == 1)
+			return dn->last_conv;
+		else return 0;
+	}
+	else return 0;
+}
+
+/** Check if a message was delivred or not
+ */
+int Network_Stat::is_message_delivred(char *b_id,char *n_id)
+{
+	Dtn_Message *dm = this->is_message_here(b_id);
+	if(dm != NULL)
+	{
+		if( dm->is_deleted() == 2)
+			return 1;
+		else return 0;
+	}
+	else return -1;
+}
+	
+
+void Network_Stat::add_bundle_to_the_stat_axe(char * bundle_id,char *nid,double lt,double ttl)
+{
+	if(dbl_->is_bundle_delivred(string(bundle_id)) == 0)
+	{
+		if(nid != NULL)
+		{
+			Dtn_Message* bs = is_bundle_here(bundle_id);
+			if(bs == NULL)
+			{exit(-1);}
+			bs->updated = 0;
+			bs = NULL;
+		}
+
+		int ni,mi;
+		for(int i=0;i<bm_->da_->axe_length; i++)
+		{	
+			ni = this->get_number_of_copies(bundle_id);
+			mi = this->get_number_of_nodes_that_have_seen_it(bundle_id);
+
+			//fprintf(stdout, "--------------->>>>   ni = %i mi = %i\n", ni, mi);	
+
+			if(lt==0) 
+			{
+				stat_axe[0].add_message_normal_dist_ni(ni);
+				stat_axe[0].add_message_normal_dist_mi(mi);
+				stat_axe[0].add_dd_sample(ni,mi);
+				stat_axe[0].add_dr_sample(ni,mi,lt,ttl);
+				break;
+			}
+	
+			if(stat_axe[i].min_lt < lt && lt <= stat_axe[i].max_lt)
+			{
+				stat_axe[i].add_message_normal_dist_ni(ni);
+				stat_axe[i].add_message_normal_dist_mi(mi);
+				stat_axe[i].add_dd_sample(ni,mi);
+				stat_axe[i].add_dr_sample(ni,mi,lt,ttl);
+				break;
+			}
+		}
+	}else printf("Message already delivered\n");
+}
+
+/** Return the number of copies from the stat axe
+ */
+void Network_Stat::get_stat_from_axe(double et,char *bid,int *ni,int *mi,double *dd_m,double *dr_m)
+{
+//show_the_axe_stat();
+//LogMessagesMatrix();
+//LogStatAxe();
+//view_stat_table();
+//show_the_axe_stat();
+
+for(int i=0;i<bm_->da_->axe_length;i++)
+{	
+	if(et==0) 
+	{
+		// The estimated value of ni
+		 int ni_t=stat_axe[0].get_number_of_copies_normal_dist_ni();
+		 //if(ni_t==1) *ni=this->get_number_of_copies(bid);
+		 	//else 
+		 	*ni=ni_t;
+		// The estimated value of mi
+	   	 int mi_t=stat_axe[0].get_number_of_nodes_normal_dist_mi();
+		 //if(mi_t==1) *mi=this->get_number_of_nodes_that_have_seen_it(bid);
+		 	//else 
+		 	*mi=mi_t;
+		// The estimated value of dd_m
+		*dd_m=stat_axe[0].get_avg_dd_samples();
+		// The estimated value of dr_m
+		*dr_m=stat_axe[0].get_avg_dr_samples();
+		break;
+	}
+	
+	if(stat_axe[i].min_lt < et && et <= stat_axe[i].max_lt)
+	{
+		// The estimated value of ni
+		 int ni_t=stat_axe[i].get_number_of_copies_normal_dist_ni();
+		 //if(ni_t==1) *ni=this->get_number_of_copies(bid);
+		 	//else 
+		 	*ni=ni_t;
+		// The estimated value of mi
+	   	 int mi_t=stat_axe[i].get_number_of_nodes_normal_dist_mi();
+		 //if(mi_t==1) *mi=this->get_number_of_nodes_that_have_seen_it(bid);
+		 //	else 
+		 	*mi=mi_t;
+		// The estimated value of dd_m
+		*dd_m=stat_axe[i].get_avg_dd_samples();
+		// The estimated value of dr_m
+		*dr_m=stat_axe[i].get_avg_dr_samples();
+		break;
+	}
+}
+//fprintf(stdout, "STAT: Et: %f ni %i mi %i \n",et, *ni, *ni);
+
+}	
+
+
+void Network_Stat::log_stat_from_axe(double et,char *bid,int *ni,int *mi,double *dd_m,double *dr_m)
+{
+//show_the_axe_stat();
+//LogMessagesMatrix();
+//LogStatAxe();
+//view_stat_table();
+//show_the_axe_stat();
+if(number_of_nodes > 0)
+{
+	for(int i=0;i<bm_->da_->axe_length;i++)
+	{	
+		if(et==0) 
+		{
+			// The estimated value of ni
+			 int ni_t=stat_axe[0].get_number_of_copies_normal_dist_ni();
+			 //if(ni_t==1) *ni=this->get_number_of_copies(bid);
+			 	//else 
+			 	*ni=ni_t;
+			fprintf(ni_log, "%f %f %i\n",TIME_IS, et, ni_t); 
+			// The estimated value of mi
+		   	 int mi_t=stat_axe[0].get_number_of_nodes_normal_dist_mi();
+			 //if(mi_t==1) *mi=this->get_number_of_nodes_that_have_seen_it(bid);
+			 	//else 
+			 	*mi=mi_t;
+			fprintf(mi_log, "%f %f %i\n",TIME_IS, et, mi_t);
+			// The esimated value of dd_m
+			*dd_m=stat_axe[0].get_avg_dd_samples();
+			// The estimated value of dr_m
+			*dr_m=stat_axe[0].get_avg_dr_samples();
+			break;
+		}
+	
+		if(stat_axe[i].min_lt < et && et <= stat_axe[i].max_lt)
+		{
+			// The estimated value of ni
+			 int ni_t=stat_axe[i].get_number_of_copies_normal_dist_ni();
+			 //if(ni_t==1) *ni=this->get_number_of_copies(bid);
+			 	//else 
+			 	*ni=ni_t;
+			fprintf(ni_log, "%f %f %i\n",TIME_IS, et, ni_t); 
+			// The estimated value of mi
+		   	 int mi_t=stat_axe[i].get_number_of_nodes_normal_dist_mi();
+			 //if(mi_t==1) *mi=this->get_number_of_nodes_that_have_seen_it(bid);
+			 //	else 
+			 	*mi=mi_t;
+			fprintf(mi_log, "%f %f %i\n",TIME_IS, et, mi_t);
+			// The estimated value of dd_m
+			*dd_m=stat_axe[i].get_avg_dd_samples();
+			// The estimated value of dr_m
+			*dr_m=stat_axe[i].get_avg_dr_samples();
+			break;
+		}
+	}
+
+	//fprintf(stdout, "STAT: Et: %f ni %i mi %i \n",et, *ni, *ni);
+}
+}	
+
+/** Used to show the stat Axe for debugging
+ * 
+ */
+
+void Network_Stat::show_the_axe_stat()
+{
+	
+	for(int  i=0;i< axe_length;i++)
+	{
+		fprintf(stdout," MinET %f MaxEt %f  \n",stat_axe[i].min_lt,stat_axe[i].max_lt);
+		fprintf(stdout," 	The estimated number of copies with the highest number of occurence: %i\n",stat_axe[i].get_number_of_copies_normal_dist_ni());
+		fprintf(stdout,"	The estimated m_i with the highest number of occurence: %i\n", stat_axe[i].get_number_of_nodes_normal_dist_mi());
+		fprintf(stdout,"	The avg DD samples: %f samples number: %f\n",stat_axe[i].get_avg_dd_samples(), stat_axe[i].dd_samples_number);
+		fprintf(stdout,"	The avg DR samples: %f samples number: %f\n", stat_axe[i].get_avg_dr_samples(), stat_axe[i].dr_samples_number);
+		stat_axe[i].ShowMatNi();
+		stat_axe[i].ShowMatMi();
+		
+	}		
+	fprintf(stdout, "++++++++++++++++++++++++++++++++++++++++++++++\n");
+}
+
+void Network_Stat::LogStatAxe()
+{
+	for(int  i=0;i< 10;i++)
+	{
+		fprintf(axe_log," MinET %f MaxEt %f  \n",stat_axe[i].min_lt,stat_axe[i].max_lt);
+		fprintf(axe_log," 	The estimated number of copies with the highest number of occurence: %i\n",stat_axe[i].get_number_of_copies_normal_dist_ni());
+		fprintf(axe_log,"	The estimated m_i with the highest number of occurence: %i\n", stat_axe[i].get_number_of_nodes_normal_dist_mi());
+		fprintf(axe_log,"	The avg DD samples: %f samples number: %f\n",stat_axe[i].get_avg_dd_samples(), stat_axe[i].dd_samples_number);
+		fprintf(axe_log,"	The avg DR samples: %f samples number: %f\n", stat_axe[i].get_avg_dr_samples(), stat_axe[i].dr_samples_number);
+		stat_axe[i].LogMatNi(axe_log);
+		stat_axe[i].LogMatMi(axe_log);
+		
+	}
+	fprintf(axe_log, "++++++++++++++++++++++++++++++++++++++++++++++\n");
+
+}
+
+/** Search for an ni from the ni matrix
+ */
+ 
+int Axe::exist_ni(int n)
+{
+	for(int i=0;i<current_l_ni;i++)
+	{
+		if(mat_ni[i][0] == n) return i;
+	}
+
+	return -1;
+}
+
+/** Add an ni value to the ni matrix
+ */
+
+void Axe::add_message_normal_dist_ni(int ncp)
+{
+	if(this->current_l_ni < MAX_L)
+	{
+		int pos = exist_ni(ncp);
+		if(pos == -1)
+		{ 
+			mat_ni[current_l_ni][0]=ncp;
+			mat_ni[current_l_ni][1]++;
+			current_l_ni++;
+
+		}else 
+		{
+			mat_ni[pos][1]++;
+		}
+	}
+}
+
+/** Return the mean of the normal distribution ni
+ */
+
+int Axe::get_number_of_copies_normal_dist_ni(){
+
+	int total = 0;
+	int total_weights = 0;
+	for(int i=0;i<current_l_ni;i++)
+	{
+		total += mat_ni[i][1] * mat_ni[i][0];
+		total_weights += mat_ni[i][1];
+	}
+	int r = ceil(total / (total_weights == 0?1:total_weights));
+	if(r == 0) return 1;
+	return r;
+}
+
+/** Search for an mi from the mi matrix
+ */
+
+int Axe::exist_mi(int m){
+	
+	for(int i = 0; i < current_l_mi;i++)
+	{
+		if(mat_mi[i][0] == m) return i;
+	}
+	return -1;
+}
+
+/** Add an mi value to the mi matrix
+ */
+
+void Axe::add_message_normal_dist_mi(int m){
+	if(this->current_l_mi<MAX_L)
+	{
+		int pos=exist_mi(m);
+		if(pos == -1)
+		{
+			mat_mi[current_l_mi][0] = m;
+			mat_mi[current_l_mi][1]++;
+			current_l_mi++;
+
+		}else {
+			mat_mi[pos][1]++;
+		}
+	
+	}
+}
+
+
+/** Return the mean of the normal distribution mi
+ */
+
+int Axe::get_number_of_nodes_normal_dist_mi(){
+	
+	int total = 0;
+	int total_weights = 0;
+	for(int i=0;i<current_l_mi;i++)
+	{
+		total += mat_mi[i][1] * mat_mi[i][0];
+		total_weights += mat_mi[i][1];
+	}
+	int r = ceil(total / (total_weights == 0?1:total_weights));
+	if(r == 0)	return 1;
+	return r;
+}
+	
+/* Add Delivery Delay metric sample
+ */ 
+void Axe::add_dd_sample(int ni,int mi){
+
+//dd_metric+=(double)((NUMBER_OF_NODES-1-mi)/ni);
+dd_metric+=(double)((this->ns->get_number_of_nodes()-1-mi)/ni);
+dd_samples_number++;
+
+}
+
+/* Add Delivery Rate metric sample
+ */ 
+void Axe::add_dr_sample(int ni,int mi,double et,double ttl)
+{
+
+	double amt;
+	if(this->ns->number_of_meeting > 0)
+		amt = this->ns->total_meeting_samples/this->ns->number_of_meeting;
+	else amt = this->ns->total_meeting_samples;
+	
+	double alpha = amt*(this->ns->get_number_of_nodes()-1);
+	//dr_metric+=(1-(mi/(NUMBER_OF_NODES-1)))*exp(-1*(ttl-et)*ni*(1/(alpha)));
+	//double alpha=amt*(this->ns->get_number_of_nodes()-1);
+	//dr_metric+=(1-(mi/(this->ns->get_number_of_nodes()-1)))*exp(-1*(ttl-et)*ni*(1/(alpha)));
+	if(this->ns->get_number_of_nodes() > 0 && alpha > 0)
+	{
+		dr_metric += (1-(mi/(this->ns->get_number_of_nodes()-1)))*exp(-1*(ttl-et)*ni*(1/(alpha)));
+	}
+	else {
+		dr_metric += (1-mi)*exp(-1*(ttl-et)*ni);
+	}
+	dr_samples_number++;
+//fprintf(stdout," dr_metric to add %f dr_samples_number %f Elapsed time %f ttl %f ni %i mi %i\n",(1-(mi/(NUMBER_OF_NODES-1)))*exp(-1*(ttl-et)*ni*(1/(alpha))),dr_samples_number,et,ttl,ni,mi);
+}
+	
+/* Return the avg of the Delivery Delay samples
+ * */ 
+double Axe::get_avg_dd_samples(){
+if(dd_samples_number>0)
+	return (double)(dd_metric/dd_samples_number);
+}
+
+/* Return the avg of the Delivery Rate samples
+ */ 
+double Axe::get_avg_dr_samples(){
+if(dr_samples_number>0)
+	return (double)(dr_metric/dr_samples_number);
+}
+
+void Network_Stat::init_axe()
+{
+for(int i=0;i<bm_->da_->axe_length;i++)
+{	
+	stat_axe[i].current_l_ni=0;
+	stat_axe[i].current_l_mi=0;
+	stat_axe[i].current_l_delivery_delay=0;
+	stat_axe[i].current_l_delivery_rate=0;
+	for(int j=0;j<MAX_L;j++)
+	{
+		stat_axe[i].mat_ni[j][0]=0;
+		stat_axe[i].mat_ni[j][1]=0;
+		stat_axe[i].mat_mi[j][0]=0;
+		stat_axe[i].mat_mi[j][1]=0;
+	}
+	stat_axe[i].dd_metric=0;
+	stat_axe[i].dd_samples_number=0;
+	stat_axe[i].dr_metric=0;
+	stat_axe[i].dr_samples_number=0;
+	stat_axe[i].max_lt=0;
+	stat_axe[i].min_lt=0;
+	stat_axe[i].convergence=1;
+}
+}
+
+void Network_Stat::update_axe()
+{
+	//if(this->get_number_of_nodes()==NUMBER_OF_NODES && this->convergence_state==0)
+	/*if(TIME_IS == 1600 && this->convergence_state==0 )
+	{	this->init_axe();
+		this->convergence_state=1;
+	}
+	*/
+	if(this->last_axe_update == 1)
+	{
+		for(map<string, Dtn_Message *>::iterator iter= messagesMatrix.begin(); iter != messagesMatrix.end(); iter++)
+		{
+			if((iter->second)->updated == 1)
+			{
+				add_bundle_to_the_stat_axe((char*)iter->first.c_str(), NULL, (iter->second)->life_time,(iter->second)->ttl);
+				(iter->second)->updated = 0;
+			}
+		}
+		this->last_axe_update=0;
+	}
+}

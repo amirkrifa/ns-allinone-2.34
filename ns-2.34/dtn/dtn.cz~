@@ -1,0 +1,308 @@
+/**
+Copyright (c) 2007-2008
+AUTHOR : Amir KRIFA INRIA Sophia-Antipolis.
+Mail : Amir.Krifa@sophia.inria.fr
+All rights reserved.
+**/
+
+/** \file dtn.cc  DTN Agent. 
+*/
+
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <string.h>
+#include <sys/types.h>
+#include <time.h>
+#include <errno.h>
+
+#include "tcl.h"
+#include "../tclcl-1.18/tclcl.h"
+#include "common/ip.h"
+#include "common/node.h"
+#include "common/simulator.h"
+
+#include "dtn.h"
+#include "headers.h"
+#include "debug.h"
+#include "tools/random.h"
+#include "epidemic-routing.h"
+
+int hdr_bdlprim::offset_;
+#include <iostream.h>
+
+/** Debug logfile. */
+FILE* logfile = NULL;
+/** Bundle trace file. */
+FILE* tracefile = NULL;
+/** Queue size file. */
+FILE* queuelog = NULL;
+/** Logdir.\ This is where packetdumps are stored. */
+char* logdir  = NULL;
+
+/** TCL Linkage class. */
+static class DTNBundleHeaderClass : public PacketHeaderClass {
+public:
+  DTNBundleHeaderClass() : PacketHeaderClass("PacketHeader/DTNBundle", 
+					     sizeof(hdr_bdlprim)) {
+    bind_offset(&hdr_bdlprim::offset_);
+  }
+} class_bundlehdr;
+
+
+/** Another TCL Linkage class. */
+static class DTNAgentClass : public TclClass {
+public:
+  DTNAgentClass() : TclClass("Agent/DTNAgent") {}
+  TclObject* create(int, const char*const*) {
+    return (new DTNAgent());
+  }
+} class_dtnagent;
+
+/** Checks that the specified directory path exists and creates directories if needed.
+ *
+ * \param dir  Directory path to be checked.
+ *
+ * \returns Status code indicating outcome.
+ * \retval 0 on success.
+ * \retval -1 on  error.
+ */
+int checkDir(const char* dir)
+{  
+  struct stat sbuf;
+  char* next=NULL;
+  const char* last=dir;
+  char cur[strlen(dir)+1];
+  int len=0;
+
+
+  if(! dir){
+    printf("FAILURE! checkDir called with NULL\n");
+    return -1;
+  }
+
+  while(len<strlen(dir)){
+    next = strchr(last, '/');
+    if(!next) len=strlen(dir);
+    else      len=next-dir;
+    last=next+1;
+    strncpy(cur,dir,len);
+    cur[len]='\0';
+    if(stat(cur,&sbuf)){
+      if(errno == ENOENT){
+	if(mkdir(cur,0755)){
+	  printf("FAILURE! Unable to create directory '%s'.\n",cur);
+	  perror("ERR:");
+	  return -1;
+	} 
+      }else{
+	printf("FAILURE! Error occured when stat:ing '%s'.\n",cur);
+	perror("ERR:");
+	return -1;
+      }
+    }else if(!S_ISDIR(sbuf.st_mode)){
+      printf("FAILURE! '%s' exists but is not a directory.\n",cur);
+      return -1;
+    }
+  }
+
+  return 0;
+}
+
+/** DTN Agent constructor.
+ */
+DTNAgent :: DTNAgent() : Agent(PT_DTNBUNDLE), src_(NULL),  dest_(NULL), rpt_to_(NULL), cos_(NULL), options_(NULL), lifespan_(NULL)
+{ bind("custodian_", &custodian_);
+  bind("retransmit_",&retransmit_);
+  bind("epidemic_buffered_bundles",&epidemic_buffered_bundles);
+  bind("delivered_bundles",&delivered_bundles);
+  bind("deleted_bundles",&deleted_bundles);
+  bind("number_of_generated_packets",&number_of_generated_packets);
+  bind("number_of_deleted_bundles_due_to_ret_failure",&number_of_deleted_bundles_due_to_ret_failure);
+  bind("number_of_asked_bundles",&number_of_asked_bundles);
+  bind("number_recv_bundles",&number_recv_bundles);
+  bind("total_delay",&total_delay);
+  bind("is_message_here",&is_message_here);
+  bind("is_delivered",&is_delivered);
+  bind("is_visitor_here",&is_visitor_here);
+#ifdef CREATE_LOGDIR
+  if(!logdir){
+    time_t now;
+    struct tm* now_tm;
+    time(&now);
+    now_tm=localtime(&now);
+    char* logdir_d = new char[1024];
+    logdir = new char[1024];
+    if(! logdir || ! logdir_d){
+      DPRINT(DEB_ERR, "Could not allocate memory for logdir(%08x) or logdir_d(%08x)",logdir,logdir_d);
+      abort();
+    }
+
+    snprintf(logdir_d,1023,"%04d%02d%02d-%02d%02d%02d",now_tm->tm_year+1900,now_tm->tm_mon+1,now_tm->tm_mday,now_tm->tm_hour,now_tm->tm_min,now_tm->tm_sec);
+    snprintf(logdir,1023,"%s/%s",LOGBASEDIR,logdir_d);
+    checkDir(logdir);
+    unlink(LOGBASEDIR "/current");
+    symlink(logdir_d, LOGBASEDIR "/current");
+    delete logdir_d;
+  }
+#ifdef DEBUGLOG
+  if(!logfile){
+    char* file = new char[1024];
+    if(! file) { DPRINT(DEB_ERR,"Could not allocate memory."); abort(); }
+    snprintf(file,1023,"%s/%s",logdir,LOGFILE);
+    
+    logfile=fopen(file,"w");
+    DPRINT(0,"Logfile '%s' opened.",file);
+    delete file;
+  }
+#endif //DEBUGLOG
+#ifdef BDLTRACE
+  if(!tracefile){
+    char* tfile = new char[1024];
+    if(! tfile) { DPRINT(DEB_ERR,"Could not allocate memory."); abort(); }
+    snprintf(tfile,1023,"%s/%s",logdir,TRACEFILE);
+    
+    tracefile=fopen(tfile,"w");
+    fprintf(tracefile, "TIME NODE EVENT SRC TIMESTAMP PRIO CFLAGS DEST RPT_TO TOKEN OFFSET FRAGLEN TOTLEN FNODE\n");
+    delete tfile;
+  }
+#endif //BDLTRACE
+#ifdef QUEUELOG
+  if(!queuelog){
+    char* qfile = new char[1024];
+    if(! qfile) { DPRINT(DEB_ERR,"Could not allocate memory."); abort(); }
+    snprintf(qfile,1023,"%s/%s",logdir,QUEUELOGFILE);
+    
+    queuelog=fopen(qfile,"w");
+    fprintf(queuelog, "TIME NODE");
+    for(int qnum=0; qnum < NUM_QUEUES; qnum++){
+	fprintf(queuelog, " QUEUE[%d]", qnum);
+    }
+    fprintf(queuelog, " QUEUE[ALL] SENT LOCAL FRAGS\n");
+    delete qfile;
+  }
+#endif //QUEUELOG
+#endif //CREATE_LOGDIR
+
+  DPRINT(DEB_INFO,"Agent CREATED.");
+  
+  if(! (routes_ = new Routes(&here_))){
+    DPRINT(DEB_ERR, "Could not allocate memory for routes.");
+    abort();
+  }
+  if(! (reg_    = new Registration())){
+    DPRINT(DEB_ERR, "Could not allocate memory for registration handler.");
+    abort();
+  }
+  if(! (bm_     = new BundleManager(routes_,reg_,this))){
+    DPRINT(DEB_ERR, "Could not allocate memory for bundlemanager.");
+    abort();
+  }
+
+/** DTNAgent Default Configuration **/
+  number_of_asked_bundles=0;
+  number_recv_bundles=0;
+  max_bundles_in_local_buffer=0;
+  max_neighbors=0;
+  max_hop_count=0;
+  hello_interval=0;
+  max_ids_count=0; 
+  delivered_bundles_cleaning_interval=0;
+  max_uid_length=0;
+  local_buffer_cleaning_interval=0;
+  block_resend_interval=0;	
+  neighbors_check_interval=0;
+  number_of_generated_packets=0;
+  number_of_deleted_bundles_due_to_ret_failure=0;
+  am_i_source=0;
+  infinite_ttl =0;
+  anti_packet_mechanism=0;
+  maintain_stat=0;
+  activate_ack_mechanism =0;
+  number_of_sources=0;
+  am_i_source=0;
+  scheduling_type=0;
+  axe_subdivision=0;
+  axe_length=0;
+  FILE* config_file=fopen("./Network_Config.txt","a");
+  	if(config_file!=NULL)
+  		{remove("./Network_Config.txt");fclose(config_file);}
+  	
+}
+
+/** Helper function to allocate packets from BundleManager.
+ *
+ * \param  size Size of packet to be allocated.
+ *
+ * \returns Allocated packet.
+ */
+Packet* DTNAgent :: newpacket(int size)
+{
+  return allocpkt(size);
+}
+
+/**  Helper function to send packets from BundleManager.
+ *
+ * \param pkt The packet to be sent.
+ */
+void DTNAgent :: sendPacket(Packet* pkt)
+{
+send(pkt, (Handler*) 0);
+
+}
+
+/** Application linkage. Sends a chunk of data.
+ *
+ * \param nbytes How many bytes to send.
+ * \param flags  Options for the transmission.
+*/
+void DTNAgent :: sendmsg(int nbytes, const char* flags)
+{
+  char datasize[32];
+  sprintf(datasize,"%d",nbytes);
+  
+//   fprintf(stdout, "dta Sending %d bytes with flags '%s'.",nbytes,flags?flags:"no flags");
+
+  if(nbytes<1){
+    fprintf(stdout,"Number of bytes to send is less than 1 (%d).",nbytes);
+    return;
+  }
+  
+  if(!src_ || !dest_ || !rpt_to_ || !cos_ || !options_ || !lifespan_){
+    fprintf(stderr, "sendmsg called when not correctly setup. Ignoring.");
+    return;
+  }
+   
+  //number_of_generated_packets++;
+  am_i_source=1;
+  bm_->newBundle(src_,dest_,rpt_to_,cos_,options_,lifespan_,NULL,NULL,datasize,0);
+  //number_of_generated_packets++;
+}
+
+
+/** Regtoken format. */
+#define REGTOKEN_IND_FMT "%s indRegToken %s %d"
+
+/** TCL Linkage function to execute commands.
+ * Called when $agent ...  is used.
+ *
+ * \param argc  Argument count.
+ * \param argv  The list of arguments.
+ * 
+ * \returns Statuscode indicating to TCL layer whether the command was successfully executed.
+ * \retval  TCL_OK on success.
+ *
+ */
+int DTNAgent :: command(int argc, const char*const* argv)
+{
+  Tcl&        tcl    = Tcl::instance();
+  Simulator&  sim    = Simulator::instance();
+  const char* tclres = tcl.result();
+
+  if(argc>1){
+    /* Setup calls. */
+
+    // 1   2     3       4              5
+    // add route nexthop custodian(0/1) metric mtu
+     

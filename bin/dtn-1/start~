@@ -1,0 +1,146 @@
+
+
+
+#Courbe stat exchanging policy 2 
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 10 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+
+mkdir ../10-2
+cp * ../10-2/
+rm -f ../10-2/scene_ns
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 20 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../20-2
+cp * ../20-2/
+rm -f ../20-2/scene_ns
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 30 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../30-2
+cp * ../30-2/
+rm -f ../30-2/scene_ns
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../40-2
+cp * ../40-2/
+rm -f ../40-2/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 50 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../50-2
+cp * ../50-2/
+rm -f ../50-2/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 60 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../60-2
+cp * ../60-2/
+rm -f ../60-2/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 70 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 2 buffer_size 30.0 axe_subdivision 50 axe_length 72 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+
+mkdir ../70-2
+cp * ../70-2/
+rm -f ../70-2/scene_ns
+
+
+
+
+#Courbe stat exchanging policy 0 
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 10 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../10-0
+cp * ../10-0/
+rm -f ../10-0/scene_ns
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 20 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../20-0
+cp * ../20-0/
+rm -f ../20-0/scene_ns
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 30 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../30-0
+cp * ../30-0/
+rm -f ../30-0/scene_ns
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../40-0
+cp * ../40-0/
+rm -f ../40-0/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 50 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../50-0
+cp * ../50-0/
+rm -f ../50-0/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 60 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../60-0
+cp * ../60-0/
+rm -f ../60-0/scene_ns
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 70 cbr_interval 900 ttl 3600 sim_duration 27000 max_generated_packets 20 maintain_stat 1 infinite_ttl 0 drop_policy 7 scheduling_policy 3 sprying_policy 0 buffer_size 30.0 axe_subdivision 200 axe_length 18 packet_size 1 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 5 max_stat_messages 50 time_to_new_stat 3600 stop_uid 18
+
+mkdir ../70-0
+cp * ../70-0/
+rm -f ../70-0/scene_ns

@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//FR">
+<html><head><!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others --><title>Déboguage avec gdb</title>
+
+
+
+
+<meta name="description" content="Déboguage avec gdb">
+<meta name="keywords" content="memo">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="STYLESHEET" href="gdb_files/memo.css">
+<link rel="next" href="http://www.linux-france.org/article/memo/node120.html">
+<link rel="previous" href="http://www.linux-france.org/article/memo/node118.html">
+<link rel="up" href="http://www.linux-france.org/article/memo/node118.html">
+<link rel="next" href="http://www.linux-france.org/article/memo/node120.html"></head><body>
+<!--Navigation Panel-->
+<a name="tex2html1994" href="http://www.linux-france.org/article/memo/node120.html">
+<img alt="next" src="gdb_files/next_motif.png" align="bottom" border="0" height="24" width="37"></a> 
+<a name="tex2html1990" href="http://www.linux-france.org/article/memo/node118.html">
+<img alt="up" src="gdb_files/up_motif.png" align="bottom" border="0" height="24" width="26"></a> 
+<a name="tex2html1984" href="http://www.linux-france.org/article/memo/node118.html">
+<img alt="previous" src="gdb_files/previous_motif.png" align="bottom" border="0" height="24" width="63"></a> 
+<a name="tex2html1992" href="http://www.linux-france.org/article/memo/node1.html">
+<img alt="contents" src="gdb_files/contents_motif.png" align="bottom" border="0" height="24" width="65"></a> 
+<a name="tex2html1993" href="http://www.linux-france.org/article/memo/node181.html">
+<img alt="index" src="gdb_files/index_motif.png" align="bottom" border="0" height="24" width="43"></a> 
+<br>
+<b> Next:</b> <a name="tex2html1995" href="http://www.linux-france.org/article/memo/node120.html">Utiliser gdb sous Emacs</a>
+<b> Up:</b> <a name="tex2html1991" href="http://www.linux-france.org/article/memo/node118.html">Outils pour la programmation</a>
+<b> Previous:</b> <a name="tex2html1985" href="http://www.linux-france.org/article/memo/node118.html">Outils pour la programmation</a>
+<br>
+<br>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION001171000000000000000">&nbsp;</a>
+<a name="2801">&nbsp;</a>
+<a name="2802">&nbsp;</a>
+<br>
+Déboguage avec gdb
+</h2>
+
+<p>
+Le programme <code>gdb</code> permet d'aider le programmeur à trouver les bogues dans un programme C.
+
+</p><p>
+Voici un exemple d'utilisation de <code>gdb</code> : un programme nommé <code>bogue</code>
+qui plante lorsqu'il lit une entrée au clavier. Voici le code source du programme <code>bogue</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>#include &lt;stdio.h&gt;
+
+static char buf[256];
+void lit_entree (char *s);
+
+main ()
+{
+  char *entree = NULL;
+
+  lit_entree (entree);
+  printf ("Vous avez tape : %s\n", entree);
+}
+
+void 
+lit_entree (char *s)
+{
+  printf ("Commande : ");
+  gets (s);
+}
+</pre></blockquote>
+<p>
+Quand on lance ce programme, il plante si on entre une chaîne au clavier. Par exemple si on tape ``test''&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Commande : test
+Segmentation fault
+</pre></blockquote>
+<p>
+Le débogueur <code>gdb</code> va nous aider. Il faut d'abord compiler le programme avec l'option <em>-g</em> pour le déboguage, et <b>sans optimisations</b> (utiliser éventuellement <em>-O0</em>, pour supprimer toute optimisations)&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>gcc -g -o bogue bogue.c
+</pre></blockquote>
+<p>
+Maintenant, on peut lancer <code>gdb</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>gdb bogue
+</pre></blockquote>
+<p>
+On peut lancer le programme par la commandes <code>run</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Commande : test
+
+Program received signal SIGSEGV, Segmentation fault.
+0x4002fbe8 in _IO_gets (buf=0x0)
+(gdb)
+</pre></blockquote>
+<p>
+La commande <code>where</code> permet de déterminer où le programme s'est arrêté&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>#0  0x4002fbe8 in _IO_gets (buf=0x0)
+#1  0x10e1 in lit_entree (s=0x0) at bogue.c:17
+#2  0x10a3 in main () at bogue.c:11
+(gdb)
+</pre></blockquote>
+<p>
+La commande <code>list</code> permet d'inspecter les lignes de code suspectes. Par exemple, pour inspecter autour de la ligne 17&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>list bogue.c:17
+</pre></blockquote>
+<p>
+</p><blockquote>
+<pre>12      }
+13
+14      void lit_entree(char *s)
+15      {
+16      printf("Commande : ");
+17      gets(s);
+18      }
+</pre></blockquote>
+<p>
+Il semble que l'appel de <em>lit_entree</em> pose problème. Pour s'en assurer, on peut regarder où l'appel a été émis (ligne 11)&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>list bogue.c:11
+</pre></blockquote>
+<p>
+</p><blockquote>
+<pre>6
+7       main ()
+8       {
+9         char *entree = NULL;
+10
+11        lit_entree (entree);
+12        printf ("Vous avez tape : %s\n", entree);
+13      }
+14
+15      void 
+(gdb)
+</pre></blockquote>
+<p>
+C'est clair, le problème vient de cette fichue ligne 11, puisque le pointeur <em>entree</em> n'est pas initialisé. On peut corriger le programme en affectant le pointeur <em>entree</em> à <em>buf</em> qui lui est initialisé. Pour cela, taper&nbsp;:
+
+</p><p>
+</p><blockquote>
+<code>file bogue</code>
+</blockquote>
+<p>
+Il apparaît alors&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>A program is being debugged already.  Kill it? (y or n) y
+
+Load new symbol table from "bogue"? (y or n) y
+Reading symbols from bogue...done.
+(gdb)
+</pre></blockquote>
+<p>
+On peut regarder les premières lignes du programme, là où sont déclarées les variables, par la commande <code>list</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Source file is more recent than executable.
+1       #include &lt;stdio.h&gt;
+2
+3       static char buf[256];
+4       void lit_entree (char *s);
+5
+6       main ()
+7       {
+8         char *entree = NULL;
+9
+10        lit_entree (entree);
+(gdb)
+</pre></blockquote>
+<p>
+On met un <b>point d'arrêt</b> à la ligne 10, juste avant
+l'affectation douteuse. La programme s'arrêtera à ce stade pour toutes
+les opérations qui suivront&nbsp;:
+</p><p>
+</p><blockquote>
+<code>break 10</code>
+</blockquote>
+<p>
+On voit alors s'afficher sur l'écran&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Breakpoint 1 at 0x80484bd: file bogue.c, line 10.
+(gdb)
+</pre></blockquote>
+<p>
+On peut donc lancer le programme par la commande <code>run</code>, qui s'exécute jusqu'à la ligne 10&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Starting program: /home/mathieu/prog/C/gdb/bogue 
+
+Breakpoint 1, main () at bogue.c:10
+10        lit_entree (entree);
+</pre></blockquote>
+<p>
+Et on corrige par la commande <code>set</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>set var entree=buf
+</pre></blockquote>
+<p>
+La commande <code>cont</code> permet de continuer l'exécution du programme, puisque maintenant le pointeur <em>entree</em> est initialisé&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>Continuing.
+Commande : test
+Vous avez tape : test
+
+Program exited with code 026.
+(gdb)
+</pre></blockquote>
+<p>Le programme s'est terminé normalement. Il ne reste plus qu'à
+apporter les modifications nécessaires au fichier source, et à
+recompiler (sans l'option <em>-g</em>, puisque tout marche dorénavant).
+<br>
+
+</p><p>
+On peut par ailleurs utiliser bien d'autre commandes sous <code>gdb</code>, comme <code>next</code> pour exécuter la ligne de code suivante (après un point d'arrêt, par exemple) <em>dans la même fonction</em> (il faut bien-sûr que le programme tourne, c'est-à-dire que <code>run</code> ait été lancé), ou <code>step</code> pour exécuter la ligne de code suivante et éventuellement <em>les appels de fonctions rencontrés</em>. On peut aussi exécuter le programme jusqu'à une ligne donnée, par exemple <code>until 24</code> exécute le programme jusqu'à la ligne 24. La commande <code>print</code> permet de connaître la valeur d'une variable&nbsp;: <code>print a</code> donne&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>$1 = 8
+</pre></blockquote>
+<p>
+et <code>print b</code> donne&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>$2 = 5
+</pre></blockquote>
+<p>
+dans le petit programme <code>salou</code> évoqué précédemment.
+
+</p><p>
+Pour sortir d'une fonction et retourner dans la fonction courante, utiliser la commande <code>finish</code>. La commande <code>quit</code> permet de quitter <code>gdb</code>.
+<br>
+
+</p><p>
+Pour déboguer un programme en cours de fonctionnement, il faut lancer <code>gdb</code> puis le lier au processus actif, par la commande <code>attach</code> suivie du numéro de processus (PID, voir section&nbsp;<a href="http://www.linux-france.org/article/memo/node13.html#sec:processus">1.9</a> page&nbsp;<a href="http://www.linux-france.org/article/memo/node13.html#sec:processus"><img alt="[*]" src="gdb_files/cross_ref_motif.png" align="bottom" border="1"></a>). Par exemple&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) attach 254
+</pre></blockquote>
+<p>
+attache le programme de PID 254 (il faut avoir chargé le fichier source correspondant en appelant <code>gdb</code>). On peut aussi lier le programme lorsqu'on appelle <code>gdb</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>gdb salou 254
+</pre></blockquote>
+<p>
+Si on apporte des modifications au fichier source et qu'on le recompile, il faut avant détacher le processus avec la commande <code>detach</code>, effectuer les modifications, recompiler, et employer la commande <code>file</code>
+pour recharger le nouvel exécutable dans le débogueur. Il ne reste plus
+qu'à attacher la nouvelle version du programme par la commande <code>attach</code>.
+<br>
+
+</p><p>
+Pour examiner les valeurs des variables du programme, la commande <code>print</code>
+est la plus souvent utilisée. On peut savoir la valeur d'une variable,
+d'une fonction, d'un élément de tableau...On peut aussi se contenter de
+fournir le numéro <em>interne</em> à <code>gdb</code>, lors d'un précédent <code>print</code> (comme $2 pour appeler <em>b</em>, dans l'exemple précédent). On peut même affecter une valeur&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) print b=7
+$3 = 7
+(gdb)
+</pre></blockquote>
+<p>
+Pour avoir une définition plus complète d'une variable, utiliser la commande <code>ptype</code> suivie de l'adresse ou de la variable&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) ptype b
+type = int
+(gdb) ptype min
+type = int (int, int)
+(gdb)
+</pre></blockquote>
+<p>
+La commande <code>x</code> permet d'examiner la mémoire à un niveau plus bas (dans ce cas, c'est à l'adresse de la variable que <code>x</code> ira)&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) x argv[0]
+0xbffff4f1 &lt;__ypbindlist+2146674173&gt;:   0x6d6f682f
+(gdb)
+</pre></blockquote>
+<p>
+On peut spécifier le type d'affichage&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) x/5x argv[0]
+0xbffff4f1 &lt;__ypbindlist+2146674173&gt;: 0x6d6f682f 0x616d2f65 0x65696874
+0x72702f75
+0xbffff501 &lt;__ypbindlist+2146674189&gt;: 0x432f676f
+(gdb)
+</pre></blockquote>
+<p>
+affiche 100 octets de données. On peut spécifier d'autre formats d'affichage (taper <code>help x</code> pour plus d'informations)&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) x/6c argv[0]
+0xbffff4f1 &lt;__ypbindlist+2146674173&gt;: 47 '/' 104 'h' 111 'o' 109 'm' 101
+'e'47 '/'
+(gdb) x/s argv[0]
+0xbffff4f1 &lt;__ypbindlist+2146674173&gt;: "/home/mathieu/prog/C/salou_gdb"
+(gdb)
+</pre></blockquote>
+<p>
+La commande <code>info</code> permet d'avoir des informations sur le programme en cours. Par exemple, <code>info program</code> affiche le statut d'exécution&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) info program
+        Using the running image of child process 242.
+Program stopped at 0x8048679.
+It stopped at a breakpoint that has since been deleted.
+(gdb)
+</pre></blockquote>
+<p>
+La commande <code>info locals</code> donne le nom et les valeurs de toutes les variables locales de la fonction courante&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) info locals
+i = 1
+(gdb)
+</pre></blockquote>
+<p>
+De même, <code>info variables</code> affiche la liste de toutes
+les variables connues dans le programme, y compris les variables
+manipulées dans les bibliothèques système (seules les valeurs des
+variables locales et globales sont accessibles).
+</p><p>
+Pour savoir où la variables est stockée, taper <code>info address</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) info address i
+Symbol "i" is a local variable at frame offset -4.
+(gdb)
+</pre></blockquote>
+<p>
+Ici <em>i</em> est stockée à 4 octets du haut de la structure de pile courante (``<em>frame offset -4</em>'').
+
+</p><p>
+Pour obtenir des informations sur la structure de pile courante, taper <code>info frame</code>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) info frame
+Stack level 0, frame at 0xbffff388:
+ eip = 0x8048679 in main (salou.c:58); saved eip 0x804845e
+ called by frame at 0xbffff39c
+ source language c.
+ Arglist at 0xbffff388, args: argc=1, argv=0xbffff3a8
+ Locals at 0xbffff388, Previous frame's sp is 0x0
+ Saved registers:
+  ebp at 0xbffff388, eip at 0xbffff38c
+(gdb)
+</pre></blockquote>
+<p>
+<b>A propos de <em>break</em> et <em>watch</em></b>&nbsp;:
+<br>
+
+</p><p>
+La commande <code>break</code> permet d'arrêter le programme à un <b>endroit particulier</b>, comme une ligne (<code>break 20</code>), une ligne dans un autre fichier (<code>break</code> <code>cercle.c:8</code>), une fonction (<code>break aire_du_cercle</code>). Les point d'arrêt peuvent être conditionnels&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>break aire_du_cercle if (r == 0)
+</pre></blockquote>
+<p>
+La commande <code>condition</code> permet de modifier la condition d'arrêt. La commande <code>info break</code> permet d'obtenir des informations sur tous les points d'arrêt&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>(gdb) info break
+Num Type           Disp Enb Address    What
+1   breakpoint     keep y   0x08048654 in main at salou.c:56
+        breakpoint already hit 1 time
+(gdb)
+</pre></blockquote>
+<p>
+Les commandes <code>disable</code> et <code>enable</code> permettent de désactiver et d'activer un point d'arrêt. Les commandes <code>clear</code> et <code>delete</code> permettent de supprimer un point d'arrêt.
+<br>
+
+</p><p>
+La commande <code>watch</code> permet de placer des points d'observation. La différence avec <code>break</code> est qu'ils peuvent être déclenchés lorsqu'une expression est vrai <b>quelque soit l'endroit du programme</b>&nbsp;:
+
+</p><p>
+</p><blockquote>
+<pre>watch (i &lt; 2 &amp;&amp; argv[i] == ``-h'')
+</pre></blockquote>
+<p>
+L'expression obéit aux mêmes règles que celles des points d'arrêt conditionnels.
+
+</p><p>
+</p><hr>
+<!--Navigation Panel-->
+<a name="tex2html1994" href="http://www.linux-france.org/article/memo/node120.html">
+<img alt="next" src="gdb_files/next_motif.png" align="bottom" border="0" height="24" width="37"></a> 
+<a name="tex2html1990" href="http://www.linux-france.org/article/memo/node118.html">
+<img alt="up" src="gdb_files/up_motif.png" align="bottom" border="0" height="24" width="26"></a> 
+<a name="tex2html1984" href="http://www.linux-france.org/article/memo/node118.html">
+<img alt="previous" src="gdb_files/previous_motif.png" align="bottom" border="0" height="24" width="63"></a> 
+<a name="tex2html1992" href="http://www.linux-france.org/article/memo/node1.html">
+<img alt="contents" src="gdb_files/contents_motif.png" align="bottom" border="0" height="24" width="65"></a> 
+<a name="tex2html1993" href="http://www.linux-france.org/article/memo/node181.html">
+<img alt="index" src="gdb_files/index_motif.png" align="bottom" border="0" height="24" width="43"></a> 
+<br>
+<b> Next:</b> <a name="tex2html1995" href="http://www.linux-france.org/article/memo/node120.html">Utiliser gdb sous Emacs</a>
+<b> Up:</b> <a name="tex2html1991" href="http://www.linux-france.org/article/memo/node118.html">Outils pour la programmation</a>
+<b> Previous:</b> <a name="tex2html1985" href="http://www.linux-france.org/article/memo/node118.html">Outils pour la programmation</a>
+<!--End of Navigation Panel-->
+<address>
+<i>MATHIEU DECORE</i>
+<br><i>1999-11-03</i>
+</address>
+
+
+<b>Merci de me dire <a href="http://www.linux-france.org/article/memo/index.html#livredor">ce que pensez de ce document.</a>
+</b></body></html>

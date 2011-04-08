@@ -1,0 +1,128 @@
+###############
+# DD ERROR
+###############
+
+################
+# DD Ref
+################
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 10 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 20 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 30 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 50 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 60 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 70 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 0 infinite_ttl 0 drop_policy 6 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 1 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/RefDD.txt
+
+
+
+
+################
+# DD History
+################
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 10 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 20 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 30 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 40 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 50 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 60 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
+
+
+rm -f *.txt
+rm -f *.dat
+
+../ns ./dtn-wireless-1.tcl nbr_src 70 cbr_interval 540 ttl 5400 sim_duration 37800 max_generated_packets 1000 maintain_stat 1 infinite_ttl 0 drop_policy 8 scheduling_policy 0 sprying_policy 2 buffer_size 20.0 axe_subdivision 50 axe_length 108 packet_size 5 reference_policy 0 number_of_nodes 69 grid_x 3000.0 grid_y 3000.0 start_uid 0 max_stat_messages 70.0 time_to_new_stat 5400 stop_uid 59 drop_oldest_bin 50
+
+cat total_d.dat >> ../Result/DD/HistoryDD.txt
