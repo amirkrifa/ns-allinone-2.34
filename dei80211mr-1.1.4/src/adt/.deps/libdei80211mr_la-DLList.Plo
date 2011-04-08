@@ -3,16 +3,16 @@ adt/libdei80211mr_la-DLList.lo: adt/DLList.cc adt/DLList.h adt/NSNode.h \
  /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
  /usr/include/gnu/stubs-32.h \
- /usr/lib/gcc/i486-linux-gnu/4.4.3/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.4.5/include/stddef.h \
  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/i486-linux-gnu/4.4.3/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.4.5/include/stdarg.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
  /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
  /usr/include/c++/4.4/iostream \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/4.4/ostream /usr/include/c++/4.4/ios \
  /usr/include/c++/4.4/iosfwd /usr/include/c++/4.4/bits/stringfwd.h \
  /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
@@ -31,25 +31,24 @@ adt/libdei80211mr_la-DLList.lo: adt/DLList.cc adt/DLList.h adt/NSNode.h \
  /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/4.4/bits/stl_iterator.h \
  /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/localefwd.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++locale.h \
  /usr/include/c++/4.4/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/4.4/cctype \
  /usr/include/ctype.h /usr/include/endian.h /usr/include/bits/endian.h \
  /usr/include/bits/byteswap.h /usr/include/c++/4.4/bits/ios_base.h \
  /usr/include/c++/4.4/ext/atomicity.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/gthr.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/gthr-default.h \
  /usr/include/pthread.h /usr/include/sched.h /usr/include/time.h \
- /usr/include/bits/sched.h /usr/include/bits/time.h /usr/include/signal.h \
- /usr/include/bits/sigset.h /usr/include/bits/pthreadtypes.h \
- /usr/include/bits/setjmp.h /usr/include/unistd.h \
- /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
- /usr/include/bits/confname.h /usr/include/getopt.h \
- /usr/include/bits/unistd.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h \
+ /usr/include/bits/sched.h /usr/include/bits/time.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/setjmp.h \
+ /usr/include/unistd.h /usr/include/bits/posix_opt.h \
+ /usr/include/bits/environments.h /usr/include/bits/confname.h \
+ /usr/include/getopt.h /usr/include/bits/unistd.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/atomic_word.h \
  /usr/include/c++/4.4/bits/locale_classes.h /usr/include/c++/4.4/string \
  /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++allocator.h \
  /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
  /usr/include/c++/4.4/bits/ostream_insert.h \
  /usr/include/c++/4.4/cxxabi-forced.h \
@@ -63,9 +62,9 @@ adt/libdei80211mr_la-DLList.lo: adt/DLList.cc adt/DLList.h adt/NSNode.h \
  /usr/include/c++/4.4/bits/basic_ios.h \
  /usr/include/c++/4.4/bits/locale_facets.h /usr/include/c++/4.4/cwctype \
  /usr/include/wctype.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/ctype_base.h \
  /usr/include/c++/4.4/bits/streambuf_iterator.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/4.4/bits/locale_facets.tcc \
  /usr/include/c++/4.4/bits/basic_ios.tcc \
  /usr/include/c++/4.4/bits/ostream.tcc /usr/include/c++/4.4/istream \
@@ -93,7 +92,7 @@ adt/Object.h:
 
 /usr/include/gnu/stubs-32.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.4.3/include/stddef.h:
+/usr/lib/gcc/i686-linux-gnu/4.4.5/include/stddef.h:
 
 /usr/include/bits/types.h:
 
@@ -105,7 +104,7 @@ adt/Object.h:
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.4.3/include/stdarg.h:
+/usr/lib/gcc/i686-linux-gnu/4.4.5/include/stdarg.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -117,11 +116,11 @@ adt/Object.h:
 
 /usr/include/c++/4.4/iostream:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++config.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/os_defines.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/cpu_defines.h:
 
 /usr/include/c++/4.4/ostream:
 
@@ -175,7 +174,7 @@ adt/Object.h:
 
 /usr/include/c++/4.4/bits/localefwd.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++locale.h:
 
 /usr/include/c++/4.4/clocale:
 
@@ -197,9 +196,9 @@ adt/Object.h:
 
 /usr/include/c++/4.4/ext/atomicity.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/gthr.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/gthr-default.h:
 
 /usr/include/pthread.h:
 
@@ -210,10 +209,6 @@ adt/Object.h:
 /usr/include/bits/sched.h:
 
 /usr/include/bits/time.h:
-
-/usr/include/signal.h:
-
-/usr/include/bits/sigset.h:
 
 /usr/include/bits/pthreadtypes.h:
 
@@ -231,7 +226,7 @@ adt/Object.h:
 
 /usr/include/bits/unistd.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/atomic_word.h:
 
 /usr/include/c++/4.4/bits/locale_classes.h:
 
@@ -239,7 +234,7 @@ adt/Object.h:
 
 /usr/include/c++/4.4/bits/allocator.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/4.4/ext/new_allocator.h:
 
@@ -273,11 +268,11 @@ adt/Object.h:
 
 /usr/include/wctype.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/ctype_base.h:
 
 /usr/include/c++/4.4/bits/streambuf_iterator.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/ctype_inline.h:
 
 /usr/include/c++/4.4/bits/locale_facets.tcc:
 

@@ -220,7 +220,7 @@ SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
-TCL2CPP = /home/amir/bin/tcl2c++
+TCL2CPP = /home/amir/ns-allinone-2.34/tclcl-1.19/tcl2c++
 VERSION = 1.1.4
 abs_builddir = /home/amir/ns-allinone-2.34/dei80211mr-1.1.4/src
 abs_srcdir = /home/amir/ns-allinone-2.34/dei80211mr-1.1.4/src
@@ -1134,7 +1134,7 @@ uninstall-am: uninstall-libLTLIBRARIES
 
 
 InitTcl.cc: Makefile $(TCL_FILES)
-		cat $(TCL_FILES) | /home/amir/bin/tcl2c++ InitTclCode > InitTcl.cc
+		cat $(TCL_FILES) | /home/amir/ns-allinone-2.34/tclcl-1.19/tcl2c++ InitTclCode > InitTcl.cc
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

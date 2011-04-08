@@ -4,7 +4,7 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
  /home/amir/ns-allinone-2.34/ns-2.34/common/packet.h \
- /usr/include/string.h /usr/lib/gcc/i486-linux-gnu/4.4.3/include/stddef.h \
+ /usr/include/string.h /usr/lib/gcc/i686-linux-gnu/4.4.5/include/stddef.h \
  /usr/include/xlocale.h /usr/include/bits/string3.h \
  /home/amir/ns-allinone-2.34/ns-2.34/config.h /usr/include/sys/types.h \
  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
@@ -19,7 +19,7 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /home/amir/ns-allinone-2.34/tclcl-1.19/tclcl.h \
  /home/amir/ns-allinone-2.34/include/tcl.h /usr/include/stdio.h \
  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/i486-linux-gnu/4.4.3/include/stdarg.h \
+ /usr/lib/gcc/i686-linux-gnu/4.4.5/include/stdarg.h \
  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
  /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
  /home/amir/ns-allinone-2.34/include/tclDecls.h \
@@ -74,9 +74,9 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /home/amir/ns-allinone-2.34/ns-2.34/common/net-interface.h \
  /home/amir/ns-allinone-2.34/ns-2.34/mobile/energy-model.h \
  /usr/include/c++/4.4/cstdlib \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/4.4/cstddef \
  /home/amir/ns-allinone-2.34/ns-2.34/tools/rng.h \
  /home/amir/ns-allinone-2.34/ns-2.34/common/location.h \
@@ -125,7 +125,7 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/4.4/bits/stl_iterator.h \
  /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++allocator.h \
  /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
  /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_list.h \
  /usr/include/c++/4.4/initializer_list /usr/include/c++/4.4/bits/list.tcc \
@@ -136,16 +136,16 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
  /usr/include/bits/wchar2.h /usr/include/c++/4.4/bits/char_traits.h \
  /usr/include/c++/4.4/bits/localefwd.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/c++locale.h \
  /usr/include/c++/4.4/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/4.4/cctype \
  /usr/include/ctype.h /usr/include/c++/4.4/bits/ios_base.h \
  /usr/include/c++/4.4/ext/atomicity.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/gthr.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/gthr-default.h \
  /usr/include/pthread.h /usr/include/sched.h /usr/include/bits/sched.h \
- /usr/include/signal.h /usr/include/bits/setjmp.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h \
+ /usr/include/bits/setjmp.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/atomic_word.h \
  /usr/include/c++/4.4/bits/locale_classes.h /usr/include/c++/4.4/string \
  /usr/include/c++/4.4/bits/ostream_insert.h \
  /usr/include/c++/4.4/cxxabi-forced.h \
@@ -158,9 +158,9 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
  /usr/include/c++/4.4/bits/basic_ios.h \
  /usr/include/c++/4.4/bits/locale_facets.h /usr/include/c++/4.4/cwctype \
  /usr/include/wctype.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/ctype_base.h \
  /usr/include/c++/4.4/bits/streambuf_iterator.h \
- /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/4.4/i686-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/4.4/bits/locale_facets.tcc \
  /usr/include/c++/4.4/bits/basic_ios.tcc \
  /usr/include/c++/4.4/bits/ostream.tcc /usr/include/c++/4.4/istream \
@@ -187,7 +187,7 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
 
 /usr/include/string.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.4.3/include/stddef.h:
+/usr/lib/gcc/i686-linux-gnu/4.4.5/include/stddef.h:
 
 /usr/include/xlocale.h:
 
@@ -245,7 +245,7 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.4.3/include/stdarg.h:
+/usr/lib/gcc/i686-linux-gnu/4.4.5/include/stdarg.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -391,11 +391,11 @@ libdei80211mr_la-mac-802_11mr.lo: mac-802_11mr.cc \
 
 /usr/include/c++/4.4/cstdlib:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++config.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/os_defines.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/cpu_defines.h:
 
 /usr/include/c++/4.4/cstddef:
 
@@ -501,7 +501,7 @@ mac-802_11mr.h:
 
 /usr/include/c++/4.4/bits/allocator.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/4.4/ext/new_allocator.h:
 
@@ -553,7 +553,7 @@ adt/Object.h:
 
 /usr/include/c++/4.4/bits/localefwd.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/c++locale.h:
 
 /usr/include/c++/4.4/clocale:
 
@@ -569,9 +569,9 @@ adt/Object.h:
 
 /usr/include/c++/4.4/ext/atomicity.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/gthr.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/gthr-default.h:
 
 /usr/include/pthread.h:
 
@@ -579,11 +579,9 @@ adt/Object.h:
 
 /usr/include/bits/sched.h:
 
-/usr/include/signal.h:
-
 /usr/include/bits/setjmp.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/atomic_word.h:
 
 /usr/include/c++/4.4/bits/locale_classes.h:
 
@@ -615,11 +613,11 @@ adt/Object.h:
 
 /usr/include/wctype.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/ctype_base.h:
 
 /usr/include/c++/4.4/bits/streambuf_iterator.h:
 
-/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h:
+/usr/include/c++/4.4/i686-linux-gnu/bits/ctype_inline.h:
 
 /usr/include/c++/4.4/bits/locale_facets.tcc:
 

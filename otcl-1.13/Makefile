@@ -47,7 +47,7 @@ DEFINES = \
 	 -DNDEBUG -DUSE_SHM
 
 LIB =	-L/home/amir/ns-allinone-2.34/lib -ltk8.4 -L/home/amir/ns-allinone-2.34/lib -ltcl8.4 \
-	-lXext -lX11  -lnsl -ldl -lm
+	-lX11  -lnsl -ldl -lm
 
 OTCLLIB= -L. -lotcl
 

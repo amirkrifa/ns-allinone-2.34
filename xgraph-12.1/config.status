@@ -2,7 +2,7 @@
 # Generated automatically by configure.
 # Run this file to recreate the current configuration.
 # This directory was configured as follows,
-# on host amir-laptop:
+# on host amir:
 #
 # ./configure  --prefix=../
 #
@@ -63,11 +63,11 @@ s%@INSTALL_SCRIPT@%${INSTALL_PROGRAM}%g
 s%@INSTALL_DATA@%${INSTALL} -m 644%g
 s%@PACKAGE@%xgraph%g
 s%@VERSION@%12.1%g
-s%@ACLOCAL@%aclocal%g
-s%@AUTOCONF@%autoconf%g
-s%@AUTOMAKE@%automake%g
-s%@AUTOHEADER@%autoheader%g
-s%@MAKEINFO@%makeinfo%g
+s%@ACLOCAL@%/home/amir/ns-allinone-2.34/xgraph-12.1/missing aclocal%g
+s%@AUTOCONF@%/home/amir/ns-allinone-2.34/xgraph-12.1/missing autoconf%g
+s%@AUTOMAKE@%/home/amir/ns-allinone-2.34/xgraph-12.1/missing automake%g
+s%@AUTOHEADER@%/home/amir/ns-allinone-2.34/xgraph-12.1/missing autoheader%g
+s%@MAKEINFO@%/home/amir/ns-allinone-2.34/xgraph-12.1/missing makeinfo%g
 s%@SET_MAKE@%%g
 s%@CC@%gcc%g
 s%@CPP@%gcc -E%g

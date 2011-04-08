@@ -35,7 +35,7 @@ set val(mac)            Mac/802_11                 ;# MAC type
 set val(ifq)            Queue/DropTail/PriQueue		   ;# interface queue type
 set val(ll)             LL                         ;# link layer type
 set val(ant)            Antenna/OmniAntenna        ;# antenna model
-set val(ifqlen)         50                    ;# max packet in ifq
+set val(ifqlen)         50                        ;# max packet in ifq
 set val(nn)             [lindex $argv 31]          ;# number of mobilenode_
 set val(rp)             DumbAgent                  ;# routing protocol
 # ======================================================================
@@ -52,7 +52,7 @@ puts "[lindex $argv $i] = [lindex $argv [expr $i + 1]]"
 set i [expr $i + 1]
 }
 puts "------------------------------------------------"
-
+puts "Press any key to continue"
 #gets stdin
 
 
@@ -70,30 +70,7 @@ remove-packet-header AODV SR TORA IMEP MIP IPinIP Encap
 remove-packet-header  HttpInval SRMEXT SRM aSRM mcastCtrl CtrMcast rtProtoDV GAF Snoop SCTP
 remove-packet-header TCPA TCP IVS RTP
 remove-packet-header Message Resv QS UMP
-remove-packet-header Src_rt Flags
-
-
-
-
-
-Mac/802_11 set basicRate_ 1e6
-Mac/802_11 set dataRate_  110e6
-Mac/802_11 set bandwidth_ 110e6
-#Phy/WirelessPhy set bandwidth_ 11e6
-
-Antenna/OmniAntenna set X_ 0
-Antenna/OmniAntenna set Y_ 0
-Antenna/OmniAntenna set Z_ 1.5
-Antenna/OmniAntenna set Gt_ 1.0  ;#be aware the Gt_ and Gr_ are setted as the
-Antenna/OmniAntenna set Gr_ 1.0  ;#fixed value 1.0
-Phy/WirelessPhy set freq_ 2.4e9
-Phy/WirelessPhy set L_ 1.0
-Phy/WirelessPhy set Pt_ 0.3196e-5  ;#power needed to have 100m of distance
-#Phy/WirelessPhy set Pt_ 0.09588e-5	;#power needed to have 30m of distance
-Phy/WirelessPhy set RXThresh_ 3.16e-14
-Phy/WirelessPhy set CSThresh_ 3.16e-14   ;#Sensivity=-105 dbm
-Phy/WirelessPhy set CPThresh_ 10
-
+remove-packet-header Src_rt Common Flags
 
 set ns_	[new Simulator]
 $ns_ use-scheduler Heap
@@ -113,8 +90,6 @@ set generated_packets_tab($i) 0
 set avg_data_size [open "avg_data_size.dat" w]
 set avg_epidemic_data_size [open "avg_epidemic_data_size.dat" w]
 set avg_stat_data_size [open "avg_stat_data_size.dat" w]
-set estimated_nn [open "estimated_nn.dat" w]
-
 
 set fg [open "fg.dat" w]
 set td [open "td.dat" w]
@@ -124,9 +99,6 @@ set avg_ld [open "avg_ld.dat" w]
 set dest_id [open "dest_id.dat" w]
 set avg_dl [open "avg_delay.dat" w]
 set track_f [open "track_f.dat" w]
-
-
-
 # set up topography object
 set topo       [new Topography]
 $topo load_flatgrid [lindex $argv 33] [lindex $argv 35]
@@ -159,6 +131,26 @@ puts "loading the scene file !"
 			 -macTrace OFF \
 			 -movementTrace OFF
 
+#Mac/802_11 set basicRate_ 1e6
+#Mac/802_11 set dataRate_  11e6
+#Mac/802_11 set bandwidth_ 11e6
+#Phy/WirelessPhy set bandwidth_ 11e6
+
+Antenna/OmniAntenna set X_ 0
+Antenna/OmniAntenna set Y_ 0
+Antenna/OmniAntenna set Z_ 1.5
+Antenna/OmniAntenna set Gt_ 1.0  ;#be aware the Gt_ and Gr_ are setted as the
+Antenna/OmniAntenna set Gr_ 1.0  ;#fixed value 1.0
+Phy/WirelessPhy set freq_ 2.4e9
+Phy/WirelessPhy set L_ 1.0
+Phy/WirelessPhy set Pt_ 0.1196e-5  ;#power needed to have 100m of distance
+#Phy/WirelessPhy set Pt_ 0.09588e-5	;#power needed to have 30m of distance
+Phy/WirelessPhy set RXThresh_ 3.16e-14
+Phy/WirelessPhy set CSThresh_ 3.16e-14   ;#Sensivity=-105 dbm
+Phy/WirelessPhy set CPThresh_ 10
+
+
+
 for {set i 0} {$i <= $val(nn) } {incr i} { set node_($i) [$ns_ node] 
 					   $node_($i) random-motion 0
 }
@@ -173,12 +165,9 @@ set lf [lindex $argv 5]
 set cbr_i [lindex $argv 3]
 set pk_size [lindex $argv 27]
 set sim_dur [lindex $argv 7]
-set max_stat_messages [lindex $argv 39]
-set time_to_wait_for_new_stat [lindex $argv 41]
-set start_uid 	[lindex $argv 37] 				  
-set end_uid [lindex $argv 43] 						
-						
-	
+
+
+
 for { set i 0} {$i <= $val(nn)} {incr i} {set dtn($i) [new Agent/DTNAgent]}
 for { set i 0} {$i <= $val(nn)} {incr i} { $ns_ attach-agent $node_($i) $dtn($i)}
 for { set i 0} {$i <= $val(nn)} {incr i} { $dtn($i) region "REGION1"}
@@ -193,12 +182,12 @@ for { set i 0} {$i <= $val(nn)} {incr i} {
 						# Maximum number of hops
 						$dtn($i) config max_hop_count 0.0
 						# Max Ids Count
-						$dtn($i) config max_ids_count 9999.0	
+						$dtn($i) config max_ids_count 999999.0	
 						# Max UID length
 						$dtn($i) config max_uid_length 100.0
 
 						# Hello Interval
-						$dtn($i) config hello_interval 30.0
+						$dtn($i) config hello_interval 60.0
 						# Delivered bundles cleaning interval
 						$dtn($i) config delivered_bundles_cleaning_interval 6000.0
 						# Block resend interva;
@@ -255,13 +244,9 @@ for { set i 0} {$i <= $val(nn)} {incr i} {
 						# 1: Asking stat based on a set of id(s)
 						# 2: Asking stat based on a set of id+version(s)
 						$dtn($i) stat_sprying_policy [lindex $argv 19]
-						
-						# Max Number of stat Messages
-						$dtn($i) config max_number_of_stat_messages $max_stat_messages
-						$dtn($i) config time_to_wait_until_using_new_stat $time_to_wait_for_new_stat
-						$dtn($i) config start_from_uid $start_uid 
-						$dtn($i) config stop_at_uid $end_uid 
 				  }
+
+
 
 #Defining  CBR Applications
 # ../setdest/setdest -v 2 -n 100 -m 5 -M 7 -t 14400 -p 10 -x 5100 -y 5100 >scene_ns
@@ -330,23 +315,6 @@ for { set i 0} { $i <=  $val(nn)  } {incr i} {
 
 
 #########################################################
-# PairWiseAvg Algorithm Setup
-#########################################################
-$dtn(20) config  current_number_of_nodes 1
-
-proc log_number_of_nodes {} {
-
-	global estimated_nn dtn ns_
-	set enc [$dtn(20) set estimated_number_of_nodes]	
-	set tawa [$ns_ now]
-	puts $estimated_nn $enc
-	$ns_ at [expr $tawa + 100] "log_number_of_nodes"
-}
-
-$ns_ at 0 "log_number_of_nodes"
-
-
-#########################################################
 # Scheduling the application to start generating packets
 #########################################################
 
@@ -356,11 +324,11 @@ for { set i 0} {$i < $number_of_sources } {incr i} {
 	set t [expr rand()]
 	set t2 [expr $t * 10]
 	set t3 [expr round($t2)]
-	set time_to_start [expr $t3 % 100 + $last_time]
-	set time_to_start [expr $time_to_start + 1]
+	set time_to_start [expr $t3 % 10 + $last_time]
+	set time_to_start [expr $time_to_start + 50]
 	set last_time $time_to_start
 	puts "Starting the application: $i at $time_to_start"
-	$ns_ at  [expr $i]  "$app($i) start"
+	$ns_ at  [expr $time_to_start]  "$app($i) start"
 }
 
 
@@ -420,14 +388,8 @@ proc delivered_packets {} {
 }
 
 proc DeliveryRate {} {
-	global tdd fgg total_d number_of_sources start_uid stop_at_uid end_uid
-	set tmp1 [expr $end_uid - $start_uid]
-	set tmp2 [expr $tmp1 + 1]
-	set tmp3 [expr $tmp2 * $number_of_sources]
-	set avg 0
-	if { $tmp3 > 0 } {
-		set avg [expr $tdd.0 / $tmp3]
-	}
+	global tdd fgg total_d
+	set avg [expr $tdd.0 / $fgg]
 	puts $total_d "$avg"
 }
 
@@ -520,25 +482,101 @@ proc track_message_2 { m_id {m_uid} } {
 
 proc track_message {} {
 	global val dtn  ns_  track_f
-	set nbr_cp 0
-
+	for {set i 0 } {$i <= $val(nn) } {incr i} {
+		set nbr_cp($i) 0
+	} 
 	set tawa [$ns_ now]
-	set next 5.0
+	set next 1.0
 	for { set i 0} {$i <= $val(nn) } {incr i} {
-		$dtn($i) check_for_message "REGION1,_o15:0" "4"
-		set exist [$dtn($i) set is_message_here]
-		if { $exist == 1 } {
-			set nbr_cp [expr $nbr_cp + 1]
-		}
+	$dtn($i) check_for_message "REGION1,_o14:0" "2"
+	set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(0) [expr $nbr_cp(0) + 1]
 	}
 	
-	puts $track_f "$tawa $nbr_cp"
-
+	
+$dtn($i) check_for_message "REGION1,_o34:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(1) [expr $nbr_cp(1) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o54:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(2) [expr $nbr_cp(2) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o74:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(3) [expr $nbr_cp(3) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o94:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(4) [expr $nbr_cp(4) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o114:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(5) [expr $nbr_cp(5) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o134:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(6) [expr $nbr_cp(6) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o154:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(7) [expr $nbr_cp(7) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o174:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(8) [expr $nbr_cp(8) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o194:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(9) [expr $nbr_cp(9) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o214:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(10) [expr $nbr_cp(10) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o234:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(11) [expr $nbr_cp(11) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o254:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(12) [expr $nbr_cp(12) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o274:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(13) [expr $nbr_cp(13) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o294:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(14) [expr $nbr_cp(14) + 1]
+	}
+$dtn($i) check_for_message "REGION1,_o314:0" "2"
+set exist [$dtn($i) set is_message_here]
+	if { $exist == 1 } {
+		set nbr_cp(15) [expr $nbr_cp(15) + 1]
+	}
+}
+		puts $track_f "$tawa $nbr_cp(0) $nbr_cp(1) $nbr_cp(2) $nbr_cp(3) $nbr_cp(4) $nbr_cp(5) $nbr_cp(6) $nbr_cp(7) $nbr_cp(8) $nbr_cp(9) $nbr_cp(10) $nbr_cp(11) $nbr_cp(12) $nbr_cp(13) $nbr_cp(14)"
 	$ns_ at [expr $tawa+$next] "track_message"
 
 }
 
-#$ns_ at 0.0 "track_message"
+#$ns_ at 1.0 "track_message"
 
 
 #########################################################
@@ -556,10 +594,7 @@ proc show_statistics {} {
 	set aeds 0	
 
 	set tsds 0 
-	set asds 0
-	
-	set tperm 0
-	set avg_perm 0 
+	set asds 0	
 
 	for { set i 0} {$i <= $val(nn) } {incr i} { 
 	set deliv [$dtn($i) set delivered_bundles]
@@ -575,9 +610,6 @@ proc show_statistics {} {
 	set stat_data [$dtn($i) set stat_data_size]	
 	set tsds [expr $stat_data + $tsds]
 
-	set per_meeting_stat [$dtn($i) set avg_per_meeting_stat]	
-	set tperm [expr $tperm + $per_meeting_stat]		
-
 	set data [$dtn($i) set data_size]
 	set tds [expr $tds + $data]
 
@@ -588,12 +620,10 @@ proc show_statistics {} {
 	set ads [expr $tds / $val(nn).0]
 	set aeds [expr $teds / $val(nn).0]
 	set asds [expr $tsds / $val(nn).0]
-	set avg_perm [expr $tperm / $val(nn).0]
-
+	
 	puts $avg_data_size $ads 
 	puts $avg_epidemic_data_size $aeds
 	puts $avg_stat_data_size $asds
-	puts $avg_stat_data_size $avg_perm
 	 
 }
 

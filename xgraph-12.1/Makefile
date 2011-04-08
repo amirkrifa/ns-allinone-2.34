@@ -42,10 +42,10 @@ pkgincludedir = $(includedir)/xgraph
 
 top_builddir = .
 
-ACLOCAL = aclocal
-AUTOCONF = autoconf
-AUTOMAKE = automake
-AUTOHEADER = autoheader
+ACLOCAL = /home/amir/ns-allinone-2.34/xgraph-12.1/missing aclocal
+AUTOCONF = /home/amir/ns-allinone-2.34/xgraph-12.1/missing autoconf
+AUTOMAKE = /home/amir/ns-allinone-2.34/xgraph-12.1/missing automake
+AUTOHEADER = /home/amir/ns-allinone-2.34/xgraph-12.1/missing autoheader
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL} $(AM_INSTALL_PROGRAM_FLAGS)
@@ -62,7 +62,7 @@ POST_UNINSTALL = :
 ADDITIONAL_INCLUDES = 
 ADDITIONAL_LIBS = 
 CC = gcc
-MAKEINFO = makeinfo
+MAKEINFO = /home/amir/ns-allinone-2.34/xgraph-12.1/missing makeinfo
 PACKAGE = xgraph
 VERSION = 12.1
 

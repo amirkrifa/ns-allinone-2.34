@@ -594,7 +594,7 @@ s,@NS_ALLINONE_DISTCHECK_CONFIGURE_FLAGS@,|#_!!_#|--with-ns-allinone=/home/amir/
 s,@NS_CPPFLAGS@,|#_!!_#|-I/home/amir/ns-allinone-2.34/include -I/home/amir/ns-allinone-2.34/ns-2.34 -I/home/amir/ns-allinone-2.34/tclcl-1.19 -I/home/amir/ns-allinone-2.34/otcl-1.13  -I/home/amir/ns-allinone-2.34/ns-2.34/mac  -I/home/amir/ns-allinone-2.34/ns-2.34/propagation  -I/home/amir/ns-allinone-2.34/ns-2.34/mobile  -I/home/amir/ns-allinone-2.34/ns-2.34/pcap  -I/home/amir/ns-allinone-2.34/ns-2.34/tcp  -I/home/amir/ns-allinone-2.34/ns-2.34/sctp  -I/home/amir/ns-allinone-2.34/ns-2.34/common  -I/home/amir/ns-allinone-2.34/ns-2.34/link  -I/home/amir/ns-allinone-2.34/ns-2.34/queue  -I/home/amir/ns-allinone-2.34/ns-2.34/trace  -I/home/amir/ns-allinone-2.34/ns-2.34/adc  -I/home/amir/ns-allinone-2.34/ns-2.34/apps  -I/home/amir/ns-allinone-2.34/ns-2.34/routing  -I/home/amir/ns-allinone-2.34/ns-2.34/tools  -I/home/amir/ns-allinone-2.34/ns-2.34/classifier  -I/home/amir/ns-allinone-2.34/ns-2.34/mcast  -I/home/amir/ns-allinone-2.34/ns-2.34/diffusion3/lib  -I/home/amir/ns-allinone-2.34/ns-2.34/diffusion3/lib/main  -I/home/amir/ns-allinone-2.34/ns-2.34/diffusion3/lib/nr  -I/home/amir/ns-allinone-2.34/ns-2.34/diffusion3/ns  -I/home/amir/ns-allinone-2.34/ns-2.34/diffusion3/filter_core  -I/home/amir/ns-allinone-2.34/ns-2.34/asim,g
 s,@NS_LDFLAGS@,|#_!!_#|,g
 s,@NS_LIBADD@,|#_!!_#|,g
-s,@TCL2CPP@,|#_!!_#|/home/amir/bin/tcl2c++,g
+s,@TCL2CPP@,|#_!!_#|/home/amir/ns-allinone-2.34/tclcl-1.19/tcl2c++,g
 s,@LIBOBJS@,|#_!!_#|,g
 s,@LTLIBOBJS@,|#_!!_#|,g
 :end
